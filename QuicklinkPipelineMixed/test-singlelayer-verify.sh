@@ -1,0 +1,1 @@
+nohup bash suite.sh -s 1.1 -e 4.5 -m 4 -l 9 -r quicklink-nolower2 -f False -M test -t /user/ruiqiang/quicklink-nolower2/QuickLinkGeneration/clickedcrawledfeats/clicked-immchildren.sr.top-1000.dedup/part*,/user/ruiqiang/quicklink-nolower2/QuickLinkGeneration/clickedcrawledfeats/singlelayer-quicklink/part*
