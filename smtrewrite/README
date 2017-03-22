@@ -1,0 +1,29 @@
+SMT rewrite.
+
++==============================================================================
++ -n: number of models.
++ -l: number of reducers (in test phrase).
++==============================================================================
++ STEP #1: generate pairs. (mode=train, start=1, end=1)
++ ./suite-smt-rewrite.sh -m train -s 1 -e 1
++==============================================================================
++ STEP #2: SMT training. (mode=train, start=2, end=2)
++ ./suite-smt-rewrite.sh -m train -s 2 -e 2 -m 20
++==============================================================================
++ STEP #3: fork test query set. (mode=test, start=0, end=0)
++ ./suite-smt-rewrite.sh -m test -s 0 -e 0
++ this step defines number of reducers but may not use all reducers if number not a multiplier of model numbers.
++ if model number=M, set reducer number=N*M
++==============================================================================
++ STEP #4: generate rewrites for test queries from all models.
++ ./suite-smt-rewrite.sh -m test -s 1 -e 1 -l 20
++==============================================================================
++ STEP #5: extract (original query, rewrite query, top translation score)
++ ./suite-smt-rewrite.sh -m test -s 2 -e 2 -l 20
++==============================================================================
++ STEP #6: join with bid term data; at query/adgroup, compute it covered by #rewrites (#bid terms).
++ ./suite-smt-rewrite.sh -m test -s 3 -e 3
++==============================================================================
++ STEP #7: pick top rewrite.
++ selection logic: https://docs.google.com/document/d/1URXne0JCi5fcHUMDtG9SQl57YXzszSRWMRK4gMyhtsw/edit#heading=h.25qz65efbmme
++ ./suite-smt-rewrite.sh -m test -s 4 -e 4

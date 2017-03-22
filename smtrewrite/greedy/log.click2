@@ -1,0 +1,935 @@
+nohup: ignoring input
+pig -f greedy-selection.pig -Dmapreduce.cluster.acls.enabled=false -Dmapreduce.job.acl-view-job=* -Dmapreduce.job.acl-modify-job=* -Dmapred.output.compress=true -Dmapred.output.compression.codec=org.apache.hadoop.io.compress.GzipCodec -Dfs.permissions.umask-mode=022 -Dmapred.job.queue.name=default -Dmapreduce.reduce.speculative=true -Dmapreduce.map.speculative=true -Dmapreduce.map.memory.mb=6072 -Dmapreduce.fileoutputcommitter.marksuccessfuljobs=true -Dmapreduce.reduce.failures.maxpercent=10 -Dmapreduce.job.reduces= -p inputqry=/projects/qrw/ruiqiang/Gemini/smtrewrite_*/decode-*-secondpass/postprocess/part* -p inputbt=/projects/qrw/ruiqiang/intersection-bidterm-clickfeature -p out=/projects/qrw/ruiqiang/GreedySelection-click/qrw
+USING: /home/gs/pig/current
+15/11/25 15:56:50 INFO pig.ExecTypeProvider: Trying ExecType : LOCAL
+15/11/25 15:56:50 INFO pig.ExecTypeProvider: Trying ExecType : MAPREDUCE
+15/11/25 15:56:50 INFO pig.ExecTypeProvider: Trying ExecType : TEZ_LOCAL
+15/11/25 15:56:50 INFO pig.ExecTypeProvider: Trying ExecType : TEZ
+15/11/25 15:56:50 INFO pig.ExecTypeProvider: Picked TEZ as the ExecType
+2015-11-25 15:56:50,902 [main] INFO  org.apache.pig.Main - Apache Pig version 0.14.0.9.1511150240 (rexported) compiled Nov 15 2015, 03:34:58
+2015-11-25 15:56:50,902 [main] INFO  org.apache.pig.Main - Logging error messages to: /tmp/ruiqiang/greedy/pig_1448467010900.log
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/y/var/TEZ_ROOTS/ytez-0.7.1.1.1511132139/libexec/tez/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/Releases/hadoop-2.6.0.24.1509041917-20150909-000/share/hadoop-2.6.0.24.1509041917/share/hadoop/common/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+2015-11-25 15:56:51,754 [main] INFO  org.apache.pig.impl.util.Utils - Default bootup file /homes/ruiqiang/.pigbootup not found
+2015-11-25 15:56:51,902 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.output.compress is deprecated. Instead, use mapreduce.output.fileoutputformat.compress
+2015-11-25 15:56:51,902 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.output.compression.codec is deprecated. Instead, use mapreduce.output.fileoutputformat.compress.codec
+2015-11-25 15:56:51,902 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.queue.name is deprecated. Instead, use mapreduce.job.queuename
+2015-11-25 15:56:51,903 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2015-11-25 15:56:51,903 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:51,903 [main] INFO  org.apache.pig.backend.hadoop.executionengine.HExecutionEngine - Connecting to hadoop file system at: hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020
+2015-11-25 15:56:53,365 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:53,510 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:53,543 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:53,581 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:53,617 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:53,635 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.textoutputformat.separator is deprecated. Instead, use mapreduce.output.textoutputformat.separator
+2015-11-25 15:56:53,645 [main] INFO  org.apache.hadoop.hdfs.DFSClient - Created HDFS_DELEGATION_TOKEN token 3382845 for ruiqiang on jetblue-nn1.blue.ygrid.yahoo.com:8020
+2015-11-25 15:56:53,679 [main] INFO  org.apache.hadoop.mapreduce.security.TokenCache - Got dt for hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020; Kind: HDFS_DELEGATION_TOKEN, Service: jetblue-nn1.blue.ygrid.yahoo.com:8020, Ident: (HDFS_DELEGATION_TOKEN token 3382845 for ruiqiang)
+2015-11-25 15:56:53,683 [main] INFO  org.apache.hadoop.hdfs.DFSClient - Created HDFS_DELEGATION_TOKEN token 3382846 for ruiqiang on jetblue-nn1.blue.ygrid.yahoo.com:8020
+2015-11-25 15:56:53,683 [main] INFO  org.apache.hadoop.mapreduce.security.TokenCache - Got dt for hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020; Kind: HDFS_DELEGATION_TOKEN, Service: jetblue-nn1.blue.ygrid.yahoo.com:8020, Ident: (HDFS_DELEGATION_TOKEN token 3382846 for ruiqiang)
+2015-11-25 15:56:53,687 [main] INFO  org.apache.hadoop.hdfs.DFSClient - Created HDFS_DELEGATION_TOKEN token 3382847 for ruiqiang on jetblue-nn1.blue.ygrid.yahoo.com:8020
+2015-11-25 15:56:53,687 [main] INFO  org.apache.hadoop.mapreduce.security.TokenCache - Got dt for hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020; Kind: HDFS_DELEGATION_TOKEN, Service: jetblue-nn1.blue.ygrid.yahoo.com:8020, Ident: (HDFS_DELEGATION_TOKEN token 3382847 for ruiqiang)
+2015-11-25 15:56:53,703 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: SKEWED_JOIN,ORDER_BY,DISTINCT,STREAMING
+2015-11-25 15:56:53,735 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:53,740 [main] INFO  org.apache.pig.data.SchemaTupleBackend - Key [pig.schematuple] was not set... will not generate code.
+2015-11-25 15:56:53,758 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, ConstantCalculator, GroupByConstParallelSetter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, PartitionFilterOptimizer, PredicatePushdownOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter]}
+2015-11-25 15:56:53,871 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:53,877 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezLauncher - Tez staging directory is /tmp/temp948080185
+2015-11-25 15:56:53,917 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.plan.TezCompiler - File concatenation threshold: 100 optimistic? false
+2015-11-25 15:56:53,960 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.plan.optimizer.SecondaryKeyOptimizerTez - Using Secondary Key Optimization in the edge between vertex - scope-88 and vertex - scope-99
+2015-11-25 15:56:53,961 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.plan.optimizer.SecondaryKeyOptimizerTez - Using Secondary Key Optimization in the edge between vertex - scope-120 and vertex - scope-137
+2015-11-25 15:56:53,985 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapreduce.inputformat.class is deprecated. Instead, use mapreduce.job.inputformat.class
+2015-11-25 15:56:54,070 [main] INFO  org.apache.hadoop.hdfs.DFSClient - Created HDFS_DELEGATION_TOKEN token 3382848 for ruiqiang on jetblue-nn1.blue.ygrid.yahoo.com:8020
+2015-11-25 15:56:54,070 [main] INFO  org.apache.hadoop.mapreduce.security.TokenCache - Got dt for hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020; Kind: HDFS_DELEGATION_TOKEN, Service: jetblue-nn1.blue.ygrid.yahoo.com:8020, Ident: (HDFS_DELEGATION_TOKEN token 3382848 for ruiqiang)
+2015-11-25 15:56:54,095 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 7
+2015-11-25 15:56:54,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 7
+2015-11-25 15:56:54,153 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 9
+2015-11-25 15:56:54,194 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 9
+2015-11-25 15:56:54,195 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 9
+2015-11-25 15:56:54,199 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 2
+2015-11-25 15:56:54,704 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJobCompiler - Local resource: greedy-selection-token.py
+2015-11-25 15:56:54,704 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJobCompiler - Local resource: pig.jar
+2015-11-25 15:56:54,741 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:54,765 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:54,765 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:54,765 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:54,765 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:54,766 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:54,873 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-58: parallelism=9, memory=6072, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:54,874 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: C,macro_GetWordIndex_A_0
+2015-11-25 15:56:54,874 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: macro_GetWordIndex_A_0[11,5],macro_GetWordIndex_A_0[12,5],macro_GetWordIndex_A_0[14,5],macro_GetWordIndex_A_0[-1,-1],C[16,5]
+2015-11-25 15:56:54,874 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: STREAMING
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:54,921 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:54,922 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:54,965 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Set auto parallelism for vertex scope-61
+2015-11-25 15:56:54,966 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-61: parallelism=9, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:54,966 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: 
+2015-11-25 15:56:54,966 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: 
+2015-11-25 15:56:54,966 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: SAMPLER,MULTI_QUERY
+2015-11-25 15:56:55,012 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,012 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,012 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,012 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,012 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,012 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,012 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,013 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,029 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,029 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,029 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,029 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,029 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,029 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,030 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,056 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-99: parallelism=1, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,056 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: 
+2015-11-25 15:56:55,056 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: 
+2015-11-25 15:56:55,056 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: 
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,059 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,071 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,072 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,093 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-109: parallelism=-1, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,093 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: 
+2015-11-25 15:56:55,093 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: 
+2015-11-25 15:56:55,093 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: 
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,094 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,095 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,107 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,108 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,119 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,120 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,120 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,120 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,120 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,120 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,120 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,152 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-73: parallelism=2, memory=6072, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,152 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: D,macro_GetWordIndex2_A_0
+2015-11-25 15:56:55,152 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: macro_GetWordIndex2_A_0[29,12],macro_GetWordIndex2_A_0[30,12],macro_GetWordIndex2_A_0[32,12],macro_GetWordIndex2_A_0[-1,-1],D[34,12]
+2015-11-25 15:56:55,152 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: STREAMING
+2015-11-25 15:56:55,164 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,165 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,190 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Set auto parallelism for vertex scope-76
+2015-11-25 15:56:55,191 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-76: parallelism=2, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,191 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: 
+2015-11-25 15:56:55,191 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: 
+2015-11-25 15:56:55,191 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: MULTI_QUERY
+2015-11-25 15:56:55,219 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,220 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,235 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,246 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,247 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,247 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,269 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-113: parallelism=2000, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,269 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: E
+2015-11-25 15:56:55,269 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: E[59,4],E[60,4]
+2015-11-25 15:56:55,269 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: SKEWED_JOIN
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,270 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,282 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,293 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,293 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,293 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,293 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,293 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,293 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,293 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,315 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Set auto parallelism for vertex scope-120
+2015-11-25 15:56:55,315 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-120: parallelism=999, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,315 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: E
+2015-11-25 15:56:55,315 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: E[61,4]
+2015-11-25 15:56:55,315 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: SAMPLER
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,327 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,352 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Estimate quantile for sample aggregation vertex scope-137
+2015-11-25 15:56:55,361 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-137: parallelism=1, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,361 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: 
+2015-11-25 15:56:55,361 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: 
+2015-11-25 15:56:55,361 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: 
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,363 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,373 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-147: parallelism=-1, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: E
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: E[61,4]
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: 
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,392 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,393 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,403 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,403 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,403 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,412 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,436 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Set VertexManagerPlugin to PartitionerDefinedParallelismVertexManager for vertex scope-149
+2015-11-25 15:56:55,436 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - For vertex - scope-149: parallelism=-1, memory=2048, java opts=-XX:ErrorFile=<LOG_DIR>/hs_err_pid%p.log -XX:GCTimeLimit=50 -XX:ParallelGCThreads=4 -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -server -Xmx1024m -Djava.net.preferIPv4Stack=true -Dlog4j.configuratorClass=org.apache.tez.common.TezLog4jConfigurator -Dlog4j.configuration=tez-container-log4j.properties -Dyarn.app.container.log.dir=<LOG_DIR> -Dtez.root.logger=INFO,CLA 
+2015-11-25 15:56:55,436 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Processing aliases: 
+2015-11-25 15:56:55,436 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Detailed locations: 
+2015-11-25 15:56:55,436 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezDagBuilder - Pig features in the vertex: ORDER_BY
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.mb to 256 from MR setting mapreduce.task.io.sort.mb
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.read.timeout to 180000 from MR setting mapreduce.reduce.shuffle.read.timeout
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead.bytes to 4194304 from MR setting mapreduce.ifile.readahead.bytes
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.ssl.enable to false from MR setting mapreduce.shuffle.ssl.enabled
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.sort.spill.percent to 0.8 from MR setting mapreduce.map.sort.spill.percent
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.ifile.readahead to true from MR setting mapreduce.ifile.readahead
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.merge.percent to 0.66 from MR setting mapreduce.reduce.shuffle.merge.percent
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.parallel.copies to 30 from MR setting mapreduce.reduce.shuffle.parallelcopies
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.shuffle-vertex-manager.min-src-fraction to 0.95 from MR setting mapreduce.job.reduce.slowstart.completedmaps
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.memory.limit.percent to 0.25 from MR setting mapreduce.reduce.shuffle.memory.limit.percent
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.io.sort.factor to 100 from MR setting mapreduce.task.io.sort.factor
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress to true from MR setting mapreduce.map.output.compress
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.connect.timeout to 180000 from MR setting mapreduce.reduce.shuffle.connect.timeout
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.task.input.post-merge.buffer.percent to 0.0 from MR setting mapreduce.reduce.input.buffer.percent
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.compress.codec to com.hadoop.compression.lzo.LzoCodec from MR setting mapreduce.map.output.compress.codec
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.merge.progress.records to 10000 from MR setting mapreduce.task.merge.progress.records
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.internal.sorter.class to org.apache.hadoop.util.QuickSort from MR setting map.sort.class
+2015-11-25 15:56:55,454 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.util.MRToTezHelper - Setting tez.runtime.shuffle.fetch.buffer.percent to 0.6 from MR setting mapreduce.reduce.shuffle.input.buffer.percent
+2015-11-25 15:56:55,463 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJobCompiler - Total estimated parallelism is 5030
+2015-11-25 15:56:55,530 [PigTezLauncher-0] INFO  org.apache.pig.tools.pigstats.tez.TezScriptState - Pig script settings are added to the job
+2015-11-25 15:56:55,541 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClient - Tez Client Version: [ component=tez-api, version=0.7.1.1.1511132139, revision=2acbb7df0f8c2fe77d24dbc8c4a7dbeeb3424b24, SCM-URL=scm:git:https://git-wip-us.apache.org/repos/asf/tez.git, buildTime=20151113-2140 ]
+2015-11-25 15:56:56,020 [PigTezLauncher-0] INFO  org.apache.hadoop.yarn.client.api.impl.TimelineClientImpl - Timeline service address: http://jetblue-jt1.blue.ygrid.yahoo.com:4080/ws/v1/timeline/
+2015-11-25 15:56:56,153 [PigTezLauncher-0] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at jetblue-jt1.blue.ygrid.yahoo.com/10.213.61.83:8032
+2015-11-25 15:56:56,273 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClient - Using org.apache.tez.dag.history.ats.acls.EntityFileHistoryACLPolicyManager to manage Timeline ACLs
+2015-11-25 15:56:56,278 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClient - Session mode. Starting session.
+2015-11-25 15:56:56,278 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClientUtils - Using tez.lib.uris value from configuration: hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020/sharelib/v1/tez/ytez-0.7.1.1.1511132139/libexec/tez,hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020/sharelib/v1/tez/ytez-0.7.1.1.1511132139/libexec/tez/lib
+2015-11-25 15:56:56,307 [PigTezLauncher-0] INFO  org.apache.hadoop.hdfs.DFSClient - Created HDFS_DELEGATION_TOKEN token 3382851 for ruiqiang on jetblue-nn1.blue.ygrid.yahoo.com:8020
+2015-11-25 15:56:56,307 [PigTezLauncher-0] INFO  org.apache.tez.common.security.TokenCache - Got dt for hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020; Kind: HDFS_DELEGATION_TOKEN, Service: jetblue-nn1.blue.ygrid.yahoo.com:8020, Ident: (HDFS_DELEGATION_TOKEN token 3382851 for ruiqiang)
+2015-11-25 15:56:56,359 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClient - Tez system stage directory hdfs://jetblue-nn1.blue.ygrid.yahoo.com:8020/tmp/temp948080185/.tez/application_1447892961767_901065 doesn't exist and is created
+2015-11-25 15:56:56,371 [PigTezLauncher-0] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 15:56:56,580 [PigTezLauncher-0] INFO  org.apache.tez.dag.history.ats.acls.EntityFileHistoryACLPolicyManager - Writing domains for application_1447892961767_901065 to /mapred/timeline/active/application_1447892961767_901065/domainlog-application_1447892961767_901065
+2015-11-25 15:56:56,845 [PigTezLauncher-0] INFO  org.apache.tez.dag.history.ats.acls.EntityFileHistoryACLPolicyManager - Created Timeline Domain for History ACLs, domainId=Tez_ATS_application_1447892961767_901065
+2015-11-25 15:56:57,374 [PigTezLauncher-0] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1447892961767_901065
+2015-11-25 15:56:57,376 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClient - The url to track the Tez Session: http://jetblue-jt1.blue.ygrid.yahoo.com:8088/proxy/application_1447892961767_901065/
+2015-11-25 15:57:14,870 [PigTezLauncher-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - Submitting DAG PigLatin:greedy-selection.pig-0_scope-0
+2015-11-25 15:57:14,870 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClient - Submitting dag to TezSession, sessionName=PigLatin:greedy-selection.pig, applicationId=application_1447892961767_901065, dagName=PigLatin:greedy-selection.pig-0_scope-0
+2015-11-25 15:57:14,875 [PigTezLauncher-0] INFO  org.apache.tez.dag.api.DAG - Inferring parallelism for vertex: scope-109 to be 9 from 1-1 connection with vertex scope-61
+2015-11-25 15:57:14,875 [PigTezLauncher-0] INFO  org.apache.tez.dag.api.DAG - Inferring parallelism for vertex: scope-147 to be 999 from 1-1 connection with vertex scope-120
+2015-11-25 15:57:15,683 [PigTezLauncher-0] INFO  org.apache.tez.client.TezClient - Submitted dag to TezSession, sessionName=PigLatin:greedy-selection.pig, applicationId=application_1447892961767_901065, dagName=PigLatin:greedy-selection.pig-0_scope-0
+2015-11-25 15:57:15,855 [PigTezLauncher-0] INFO  org.apache.hadoop.yarn.client.api.impl.TimelineClientImpl - Timeline service address: http://jetblue-jt1.blue.ygrid.yahoo.com:4080/ws/v1/timeline/
+2015-11-25 15:57:15,855 [PigTezLauncher-0] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at jetblue-jt1.blue.ygrid.yahoo.com/10.213.61.83:8032
+2015-11-25 15:57:15,862 [PigTezLauncher-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - Submitted DAG PigLatin:greedy-selection.pig-0_scope-0. Application id: application_1447892961767_901065
+2015-11-25 15:57:16,497 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezLauncher - HadoopJobId: job_1447892961767_901065
+2015-11-25 15:57:16,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 0 Running: 0 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 15:57:36,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 0 Running: 11 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 15:58:16,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2 Running: 9 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 15:58:36,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 8 Running: 3 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 15:58:56,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 9 Running: 3 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 15:59:16,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 14 Running: 4 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 15:59:36,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 17 Running: 3 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 15:59:56,864 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 25 Running: 3 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:00:16,863 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 28 Running: 2 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:13:36,870 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 29 Running: 1 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:15:36,870 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 30 Running: 2 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:21:16,875 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 31 Running: 1 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:24:36,877 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 32 Running: 1531 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:24:56,877 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 218 Running: 1794 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:25:16,877 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 331 Running: 1699 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:25:36,878 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 457 Running: 1575 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:25:56,878 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 564 Running: 1468 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:26:16,878 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 659 Running: 1373 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:26:36,878 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 736 Running: 1296 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:26:56,878 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 797 Running: 1235 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:27:16,879 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 856 Running: 1176 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:27:36,878 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 918 Running: 1114 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:27:56,878 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 961 Running: 1071 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:28:16,879 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1008 Running: 1024 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:28:36,879 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1046 Running: 986 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:28:56,879 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1071 Running: 961 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:29:16,880 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1109 Running: 923 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:29:36,880 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1144 Running: 888 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:29:56,881 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1165 Running: 867 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:30:16,880 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1204 Running: 828 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:30:36,880 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1228 Running: 804 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:30:56,881 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1256 Running: 776 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:31:16,881 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1286 Running: 746 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:31:36,881 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1318 Running: 714 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:31:56,882 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1346 Running: 686 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:32:16,882 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1369 Running: 663 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:32:36,882 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1392 Running: 640 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:32:56,882 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1417 Running: 615 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:33:16,882 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1430 Running: 602 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:33:36,883 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1444 Running: 588 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:33:56,883 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1463 Running: 569 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:34:16,883 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1475 Running: 557 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:34:36,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1486 Running: 546 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:34:56,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1499 Running: 533 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:35:16,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1507 Running: 525 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:35:36,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1522 Running: 510 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:35:56,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1540 Running: 492 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:36:16,885 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1555 Running: 477 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:36:36,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1566 Running: 466 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:36:56,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1575 Running: 457 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:37:16,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1585 Running: 447 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:37:36,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1596 Running: 436 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:37:56,885 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1606 Running: 426 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:38:16,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1610 Running: 422 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:38:36,884 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1618 Running: 414 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:38:56,885 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1627 Running: 405 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:39:16,885 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1640 Running: 392 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:39:36,886 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1649 Running: 383 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:39:56,885 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1658 Running: 374 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:40:16,885 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1665 Running: 367 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:40:36,886 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1673 Running: 359 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:40:56,886 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1686 Running: 346 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:41:16,886 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1691 Running: 341 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:41:36,886 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1700 Running: 332 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:41:56,886 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1704 Running: 328 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:42:16,886 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1714 Running: 318 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:42:36,887 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1721 Running: 311 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:42:56,887 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1727 Running: 305 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:43:16,887 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1733 Running: 299 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:43:36,888 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1739 Running: 293 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:43:56,888 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1748 Running: 284 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:44:16,888 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1754 Running: 278 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:44:36,889 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1765 Running: 267 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:44:56,888 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1770 Running: 262 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:45:16,888 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1776 Running: 256 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:45:36,888 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1784 Running: 248 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:45:56,889 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1790 Running: 242 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:46:16,889 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1794 Running: 238 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:46:36,889 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1797 Running: 235 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:46:56,890 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1803 Running: 229 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:47:16,890 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1807 Running: 225 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:47:36,890 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1813 Running: 219 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:47:56,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1817 Running: 215 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:48:16,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1821 Running: 211 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:48:36,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1825 Running: 207 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:48:56,892 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1829 Running: 203 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:49:16,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1830 Running: 202 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:49:36,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1835 Running: 197 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:49:56,892 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1837 Running: 195 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:50:16,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1841 Running: 191 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:50:36,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1847 Running: 185 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:50:56,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1852 Running: 180 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:51:16,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1857 Running: 175 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:51:36,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1862 Running: 170 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:51:56,891 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1867 Running: 165 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:52:16,892 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1874 Running: 158 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:52:36,892 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1878 Running: 154 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:52:56,892 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1883 Running: 149 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:53:16,893 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1889 Running: 143 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:53:36,893 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1893 Running: 139 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:53:56,893 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1895 Running: 137 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:54:16,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1897 Running: 135 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:54:36,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1900 Running: 132 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:54:56,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1903 Running: 129 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:55:16,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1907 Running: 125 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:55:36,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1909 Running: 123 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:55:56,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1916 Running: 116 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:56:16,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1922 Running: 110 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:56:36,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1925 Running: 107 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:56:56,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1932 Running: 100 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:57:16,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1935 Running: 1077 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:57:36,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1936 Running: 1092 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:57:56,894 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1941 Running: 1090 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:58:36,895 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1944 Running: 1087 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:58:56,895 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1947 Running: 1084 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:59:16,896 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1948 Running: 1083 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 16:59:36,896 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1949 Running: 1082 Failed: 0 Killed: 0, diagnostics=, counters=null
+2015-11-25 17:00:16,897 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1948 Running: 1083 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:00:36,897 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1949 Running: 1082 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:00:56,897 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1951 Running: 1080 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:01:16,897 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1957 Running: 1074 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:01:36,898 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1959 Running: 1072 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:02:16,898 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1960 Running: 1071 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:02:36,899 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1962 Running: 1069 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:02:56,899 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1963 Running: 1068 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:03:16,899 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1967 Running: 1064 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:03:36,899 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1969 Running: 1062 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:03:56,899 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1972 Running: 1059 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:04:56,900 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1974 Running: 1057 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:05:16,900 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1978 Running: 1053 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:05:36,900 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1980 Running: 1051 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:06:16,901 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1981 Running: 1050 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:06:36,901 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1983 Running: 1048 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:06:56,901 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1984 Running: 1047 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:07:16,902 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1985 Running: 1046 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:07:36,902 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1986 Running: 1045 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:07:56,902 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1987 Running: 1044 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:08:36,902 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1989 Running: 1042 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:09:36,903 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1991 Running: 1040 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:09:56,903 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1993 Running: 1038 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:10:16,903 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1994 Running: 1037 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:10:56,904 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1995 Running: 1036 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:11:56,905 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1997 Running: 1034 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:12:16,905 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1998 Running: 1033 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:12:56,906 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 1999 Running: 1032 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:14:36,906 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2000 Running: 1031 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:15:16,906 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2001 Running: 1030 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:15:36,907 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2002 Running: 1029 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:16:16,906 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2003 Running: 1028 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:16:56,907 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2004 Running: 1027 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:18:36,907 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2005 Running: 1026 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:20:16,908 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2006 Running: 1025 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:20:36,908 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2007 Running: 1024 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:21:16,909 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2008 Running: 1023 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:21:36,909 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2009 Running: 1022 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:22:56,910 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2010 Running: 1021 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:23:16,910 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2011 Running: 1020 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:25:16,910 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2012 Running: 1019 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:26:36,911 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2013 Running: 1018 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:27:36,912 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2014 Running: 1017 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:28:56,913 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2015 Running: 1016 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:29:16,913 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2016 Running: 1015 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:30:16,914 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2017 Running: 1014 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:31:16,914 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2018 Running: 1013 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:31:36,914 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2019 Running: 1012 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:32:36,914 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2020 Running: 1011 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:32:56,915 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2021 Running: 1010 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:34:36,916 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2022 Running: 1009 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:34:56,916 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2023 Running: 1008 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:36:36,916 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2024 Running: 1007 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:38:56,918 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2025 Running: 1006 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:40:56,918 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2026 Running: 1005 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 17:52:56,925 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2027 Running: 1004 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:11:16,936 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2028 Running: 1003 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:11:36,936 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2029 Running: 1002 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:19:16,940 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2030 Running: 1001 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:20:16,941 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2031 Running: 1000 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:22:36,942 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2032 Running: 999 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:26:16,943 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2077 Running: 954 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:26:36,944 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2299 Running: 732 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:26:56,944 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2528 Running: 503 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:27:16,944 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2688 Running: 343 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:27:36,944 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2817 Running: 214 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:27:56,944 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2910 Running: 121 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:28:16,944 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2951 Running: 80 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:28:36,944 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 2989 Running: 43 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:28:56,945 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3005 Running: 27 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:29:16,945 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3018 Running: 14 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:29:36,945 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3022 Running: 10 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:29:56,945 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3023 Running: 9 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:30:16,946 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3025 Running: 7 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:30:36,946 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3027 Running: 5 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:30:56,946 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3029 Running: 3 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:32:16,947 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 4030 Succeeded: 3030 Running: 2 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:32:36,947 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3032 Running: 1992 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:32:56,948 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3032 Running: 1997 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:33:36,948 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3032 Running: 1998 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:39:36,951 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3034 Running: 1996 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:39:56,951 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3113 Running: 1917 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:40:16,951 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3320 Running: 1710 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:40:36,951 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3478 Running: 1552 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:40:56,952 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3613 Running: 1417 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:41:16,952 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3730 Running: 1300 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:41:36,952 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3835 Running: 1195 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:41:56,953 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3916 Running: 1114 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:42:16,952 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3969 Running: 1061 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:42:36,952 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 3997 Running: 1033 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:42:56,952 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4009 Running: 1021 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:43:16,953 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4014 Running: 1016 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:43:36,953 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4021 Running: 1009 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:43:56,953 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4024 Running: 1006 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:44:16,953 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4027 Running: 1003 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:44:56,953 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4028 Running: 1002 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:45:56,954 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4029 Running: 1001 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:46:56,954 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4030 Running: 1000 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:47:16,955 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4031 Running: 999 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:50:16,957 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4037 Running: 993 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:50:36,957 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4061 Running: 969 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:50:56,957 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4196 Running: 834 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:51:16,957 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4433 Running: 597 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:51:36,958 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4677 Running: 353 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:51:56,958 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4848 Running: 182 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:52:16,958 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4950 Running: 80 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:52:36,959 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 4993 Running: 37 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:52:56,958 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 5017 Running: 13 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:53:16,958 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 5027 Running: 3 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:53:36,958 [Timer-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=RUNNING, progress=TotalTasks: 5030 Succeeded: 5029 Running: 1 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=null
+2015-11-25 18:53:54,958 [PigTezLauncher-0] INFO  org.apache.tez.common.counters.Limits - Counter limits initialized with parameters:  GROUP_NAME_MAX=256, MAX_GROUPS=1000, COUNTER_NAME_MAX=128, MAX_COUNTERS=5000
+2015-11-25 18:53:54,962 [PigTezLauncher-0] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezJob - DAG Status: status=SUCCEEDED, progress=TotalTasks: 5030 Succeeded: 5030 Running: 0 Failed: 0 Killed: 0 FailedTaskAttempts: 2, diagnostics=, counters=Counters: 65
+	org.apache.tez.common.counters.DAGCounter
+		NUM_FAILED_TASKS=2
+		NUM_SUCCEEDED_TASKS=5032
+		TOTAL_LAUNCHED_TASKS=5032
+		OTHER_LOCAL_TASKS=1015
+		RACK_LOCAL_TASKS=4
+		AM_CPU_MILLISECONDS=628300
+		AM_GC_TIME_MILLIS=9270
+	File System Counters
+		FILE_BYTES_READ=21280582327443
+		FILE_BYTES_WRITTEN=13373177121671
+		FILE_READ_OPS=0
+		FILE_LARGE_READ_OPS=0
+		FILE_WRITE_OPS=0
+		HDFS_BYTES_READ=1295341921
+		HDFS_BYTES_WRITTEN=683328284072
+		HDFS_READ_OPS=3049
+		HDFS_LARGE_READ_OPS=0
+		HDFS_WRITE_OPS=2020
+	org.apache.tez.common.counters.TaskCounter
+		REDUCE_INPUT_GROUPS=77952961392
+		REDUCE_INPUT_RECORDS=157949356812
+		COMBINE_INPUT_RECORDS=0
+		SPILLED_RECORDS=491356548902
+		NUM_SHUFFLED_INPUTS=3021112
+		NUM_SKIPPED_INPUTS=0
+		NUM_FAILED_SHUFFLE_INPUTS=1935
+		MERGED_MAP_OUTPUTS=3019094
+		GC_TIME_MILLIS=80321883
+		CPU_MILLISECONDS=2618292430
+		PHYSICAL_MEMORY_BYTES=3759399763968
+		VIRTUAL_MEMORY_BYTES=14810391900160
+		COMMITTED_HEAP_BYTES=3759399763968
+		INPUT_RECORDS_PROCESSED=77902272683
+		OUTPUT_RECORDS=313872035122
+		OUTPUT_LARGE_RECORDS=0
+		OUTPUT_BYTES=13254450329655
+		OUTPUT_BYTES_WITH_OVERHEAD=11712019992111
+		OUTPUT_BYTES_PHYSICAL=4336783028708
+		ADDITIONAL_SPILLS_BYTES_WRITTEN=5509282918766
+		ADDITIONAL_SPILLS_BYTES_READ=5947712278349
+		ADDITIONAL_SPILL_COUNT=112527583
+		SHUFFLE_CHUNK_COUNT=4029
+		SHUFFLE_BYTES=4336862576639
+		SHUFFLE_BYTES_DECOMPRESSED=11717051868704
+		SHUFFLE_BYTES_TO_MEM=2795975320378
+		SHUFFLE_BYTES_TO_DISK=1539484376766
+		SHUFFLE_BYTES_DISK_DIRECT=1402879495
+		NUM_MEM_TO_DISK_MERGES=27848
+		NUM_DISK_TO_DISK_MERGES=0
+		SHUFFLE_PHASE_TIME=6052434824
+		MERGE_PHASE_TIME=6040241994
+		FIRST_EVENT_RECEIVED=427733248
+		LAST_EVENT_RECEIVED=6008238004
+	MultiStoreCounters
+		Output records in _0_C=5687341
+		Output records in _0_D=115833036
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=1035
+		IO_ERROR=1035
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	org.apache.hadoop.mapreduce.TaskCounter
+		COMBINE_INPUT_RECORDS=239046531006
+		COMBINE_OUTPUT_RECORDS=239186375719
+	org.apache.pig.PigCounters
+		PROACTIVE_SPILL_COUNT_BAGS=7
+		PROACTIVE_SPILL_COUNT_RECS=381430
+	org.apache.pig.PigWarning
+		PROGRESS_REPORTER_NOT_PROVIDED=1197
+	org.apache.pig.backend.hadoop.executionengine.tez.plan.udf.FindQuantilesTez
+		PROGRESS_REPORTER_NOT_PROVIDED=1197
+2015-11-25 18:53:54,983 [PigTezLauncher-0] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2015-11-25 18:53:55,054 [PigTezLauncher-0] INFO  org.apache.pig.tools.pigstats.JobStats - using output size reader: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.FileBasedOutputSizeReader
+2015-11-25 18:53:55,087 [PigTezLauncher-0] INFO  org.apache.pig.tools.pigstats.JobStats - using output size reader: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.FileBasedOutputSizeReader
+2015-11-25 18:53:55,348 [main] WARN  org.apache.pig.backend.hadoop.executionengine.tez.TezLauncher - Encountered Warning PROGRESS_REPORTER_NOT_PROVIDED 1197 time(s).
+2015-11-25 18:53:55,353 [main] INFO  org.apache.pig.tools.pigstats.tez.TezPigScriptStats - Script Statistics:
+
+       HadoopVersion: 2.6.0.24.1509041917                                                                                 
+          PigVersion: 0.14.0.9.1511150240                                                                                 
+          TezVersion: 0.7.1.1.1511132139                                                                                  
+              UserId: ruiqiang                                                                                            
+            FileName: greedy-selection.pig                                                                                
+           StartedAt: 2015-11-25 15:56:53                                                                                 
+          FinishedAt: 2015-11-25 18:53:55                                                                                 
+            Features: SKEWED_JOIN,ORDER_BY,DISTINCT,STREAMING                                                             
+
+Success!
+
+
+DAG 0:
+                                    Name: PigLatin:greedy-selection.pig-0_scope-0                                                             
+                           ApplicationId: job_1447892961767_901065                                                                            
+                      TotalLaunchedTasks: 5032                                                                                                
+                           FileBytesRead: 21280582327443                                                                                      
+                        FileBytesWritten: 13373177121671                                                                                      
+                           HdfsBytesRead: 1295341921                                                                                          
+                        HdfsBytesWritten: 683328284072                                                                                        
+      SpillableMemoryManager spill count: 0                                                                                                   
+                Bags proactively spilled: 0                                                                                                   
+             Records proactively spilled: 0                                                                                                   
+
+DAG Plan:
+Tez vertex scope-58	->	Tez vertex scope-61,
+Tez vertex scope-61	->	Tez vertex scope-99,Tez vertex scope-109,
+Tez vertex scope-99	->	Tez vertex scope-76,Tez vertex scope-109,
+Tez vertex scope-109	->	Tez vertex scope-113,
+Tez vertex scope-73	->	Tez vertex scope-76,
+Tez vertex scope-76	->	Tez vertex scope-113,
+Tez vertex scope-113	->	Tez vertex scope-120,
+Tez vertex scope-120	->	Tez vertex scope-137,Tez vertex scope-147,
+Tez vertex scope-137	->	Tez vertex scope-147,
+Tez vertex scope-147	->	Tez vertex scope-149,
+Tez vertex scope-149
+
+Vertex Stats:
+VertexId Parallelism TotalTasks   InputRecords  OutputRecords  FileBytesRead FileBytesWritten  HdfsBytesRead HdfsBytesWritten Alias	Feature	Outputs
+scope-109          9          9              0              0      179342405        272117075              0                0 		
+scope-113       2000       2000              0              0 12001355545215    3408010660352              0                0 E	SKEWED_JOIN	
+scope-120        999        999              0              0  1685226646439    3222713205690              0                0 E	SAMPLER	
+scope-137          1          1              0              0        2173957          2250536              0                0 		
+scope-147        999        999              0              0  6434440708051    5595781688628              0                0 E		
+scope-149         -1        999              0    77827812938  1139879058973    1139562698895              0     682578570925 	ORDER_BY	/projects/qrw/ruiqiang/GreedySelection-click/qrw/E,
+scope-58           9          9       15810122              0       68903231        158010047     1069772752                0 C,macro_GetWordIndex_A_0	STREAMING	
+scope-61           9          9              0        5687341       89835391        177154911              0         43487455 	SAMPLER,MULTI_QUERY	/projects/qrw/ruiqiang/GreedySelection-click/qrw/C,
+scope-73           2          2       52961272              0     1510066928       2899605367      225569169                0 D,macro_GetWordIndex2_A_0	STREAMING	
+scope-76           2          2              0      115833036    17830046673       3599729858              0        706225692 	MULTI_QUERY	/projects/qrw/ruiqiang/GreedySelection-click/qrw/D,
+scope-99           1          1              0              0            180              312              0                0 		
+
+Input(s):
+Successfully read 52961272 records (225569169 bytes) from: "/projects/qrw/ruiqiang/intersection-bidterm-clickfeature"
+Successfully read 15810122 records (1069772752 bytes) from: "/projects/qrw/ruiqiang/Gemini/smtrewrite_*/decode-*-secondpass/postprocess/part*"
+
+Output(s):
+Successfully stored 77827812938 records (682578570925 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-click/qrw/E"
+Successfully stored 5687341 records (43487694 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-click/qrw/C"
+Successfully stored 115833036 records (706225931 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-click/qrw/D"
+
+2015-11-25 18:53:55,371 [main] INFO  org.apache.pig.Main - Pig script completed in 2 hours, 57 minutes, 4 seconds and 612 milliseconds (10624612 ms)
+2015-11-25 18:53:55,377 [main] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezLauncher - Shutting down thread pool
+2015-11-25 18:53:55,405 [Thread-13] INFO  org.apache.pig.backend.hadoop.executionengine.tez.TezSessionManager - Shutting down Tez session org.apache.tez.client.TezClient@1effe4ae
+2015-11-25 18:53:55,405 [Thread-13] INFO  org.apache.tez.client.TezClient - Shutting down Tez Session, sessionName=PigLatin:greedy-selection.pig, applicationId=application_1447892961767_901065
+2015-11-25 18:53:55,426 [Thread-13] INFO  org.apache.tez.client.TezClient - Waiting until application is in a final state

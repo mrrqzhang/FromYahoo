@@ -1,0 +1,11 @@
++ Sophia's list: yo/traveltracker
++ MDM ids.
++==============================================================================
++ Sophia -> Anthony: YAM Ids (MDM with US spend).
++==============================================================================
++ Extract bid terms.
++ advertiser -> campaign -> adgroup -> fullids -> bid_terms.
++==============================================================================
++ travel (~600M): ss/match/adhoc/cow/data/travel/201508180000
++ edu (208M): ss/match/adhoc/cow/data/edu/201508200000
++ rtl (1507M): ss/match/adhoc/cow/data/rtl/201508200000

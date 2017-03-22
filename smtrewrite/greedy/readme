@@ -1,0 +1,57 @@
+Steps:
+(1) extract only bid terms existing in click features:clickfeature-fullbt-join.pig
+	10 min
+
+(2) generate greedy query rewrite (exhaustive) : greedy-selection.pig
+	3-10 hrs
+Input(s):
+Successfully read 3603323 records (291544993 bytes) from: "/projects/qrw/ruiqiang/Gemini/smtrewrite_trv/decode/postclickrewrite/thresholdcut"
+Successfully read 52961272 records (225569169 bytes) from: "/projects/qrw/ruiqiang/intersection-bidterm-clickfeature"
+
+Output(s):
+Successfully stored 23776916097 records (220205751205 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-travel//qrw"
+
+(3) rank the greedy ones using click features: joinclickfeature2.pig
+	4 hrs
+Input(s):
+Successfully read 23776916097 records (220205751205 bytes) from: "/projects/qrw/ruiqiang/GreedySelection-travel//qrw"
+Successfully read 8708038240 records (1788223579429 bytes) from: "/projects/clickmodel/ckang/usmlr/sim_20150826/query_qvec_out_combined"
+
+Output(s):
+Successfully stored 13374870 records (180566657 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-travel//clickfeaturscore//thresholdcut"
+Successfully stored 23717075564 records (406023457536 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-travel//clickfeaturscore//full"
+
+(4) merge smt rewrites and greedy rewrite: merge.pig
+Input(s):
+Successfully read 3603323 records (291544993 bytes) from: "/projects/qrw/ruiqiang/Gemini/smtrewrite_trv/decode/postclickrewrite/thresholdcut"
+Successfully read 13374870 records (180566657 bytes) from: "/projects/qrw/ruiqiang/GreedySelection-travel//clickfeaturscore//thresholdcut"
+
+Output(s):
+Successfully stored 11498119 records (101651731 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-travel//merge/rewrites"
+Successfully stored 2131010 records (9193155 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-travel//merge/qlasqueries"
+
+(5) QLAS parsing to deal with local/woe_id
+    1 hr
+
+(6) Location handling
+Input(s):
+Successfully read 11498119 records (101651731 bytes) from: "/projects/qrw/ruiqiang/GreedySelection-travel//merge/rewrites"
+Successfully read 2131010 records (69199974 bytes) from: "/projects/qrw/ruiqiang/GreedySelection-travel//qlas"
+
+Output(s):
+Successfully stored 11183887 records (112086185 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-travel//location"
+
+
+(7) ecpm-based ranking
+Input(s):
+Successfully read 11183887 records (112086185 bytes) from: "/projects/qrw/ruiqiang/GreedySelection-travel//location"
+Successfully read 12418361 records (260013534 bytes) from: "/projects/qrw/ruiqiang/ECPM"
+
+Output(s):
+Successfully stored 7957348 records (621891730 bytes) in: "/projects/qrw/ruiqiang/GreedySelection-travel//final"
+
+
+COPY to bucket location
+hdfs://dilithiumblue-nn1.blue.ygrid.yahoo.com:8020/tmp/cb_nctr/ruiqiang/
+
+
