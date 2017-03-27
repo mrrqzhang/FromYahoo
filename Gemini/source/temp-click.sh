@@ -1,0 +1,1 @@
+sh dopig.sh greedy-selection.pig "-p inputqry=/projects/qrw/ruiqiang/Gemini/smtrewrite_*/decode-*-secondpass/postprocess/part* -p inputbt=/projects/qrw/ruiqiang/intersection-bidterm-clickfeature  -p out=/projects/qrw/ruiqiang/GreedySelection-click/qrw" 

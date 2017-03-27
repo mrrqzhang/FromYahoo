@@ -1,0 +1,23 @@
+#calculate AUC
+perl ~/scripts/two-common-fields-included.pl feature-test.fv judge-pscore.txt | awk -F "\t" '{if($3~/Excellent/ || $3~/Good/)t=1;else t=0; print $4"\t"t}' judge-pscore.txt |  python ~/scripts/calc-auc.py
+
+
+#organize google style to draw curves
+ python ~/scripts/organize-google-spreadsheet-multiline-chart.py <(cut -f 2,3 product.precall ) <(cut -f 2,3 tree150.precall)
+python ~/scripts/organize-google-spreadsheet-multiline-chart.py <(cut -f 2- a.1  ) <(cut -f 2,3 tree200.precall) > precision-recall.txt
+
+perl ~/scripts/two-common-fields-included.pl feature-test.fv judge-pscore.txt | awk -F "\t" '{if($3~/Excellent/ || $3~/Good/)t=1;else t=0; print $4"\t"t}' judge-pscore.txt | python ~/scripts/calc-prec-recall.py | cut -f 1-3 | sed "s/thres://g" | sed "s/precision://g" | sed "s/recall://g" | awk -F "\t" '{if($3>=0.7)print$0}' | tail -n +2 > product.precall
+
+
+paste phrasegbdt.150.score <(cut -f 181 feature-test.fv | tail -n +2)| python ~/scripts/calc-prec-recall.py | cut -f 1-3 | sed "s/thres://g" | sed "s/precision://g" | sed "s/recall://g" | awk -F "\t" '{if($3>=0.7)print$0}' | tail -n +2 > tree150.precall
+
+
+paste phrasegbdt.150.score <(cut -f 181 feature-test.fv | tail -n +2)| python ~/scripts/calc-prec-recall.py | cut -f 1-3 | sed "s/thres://g" | sed "s/precision://g" | sed "s/recall://g" | tail -n +2 > tree150.precall
+ 
+awk -F "\t" '{if($3~/Excellent/ || $3~/Good/)t=1;else t=0; print $4"\t"t}' judge-pscore.txt | python ~/scripts/calc-prec-recall.py 
+cat precision-recall.txt | sed "s/thres://g" | sed "s/precision://g" | sed "s/recall://g" > precision-recall.txt.short
+
+hcat /projects/qrw/ruiqiang/PhraseMatch/BinPhraseScore/PhrasesWithScore.txt | sed "s/Query: //g" | sed "s/Candidate: //g" | sed "s/Score: //g" > phrase-score.txt
+cat editor.results |awk -F "\t" '{print tolower($1)"\t"tolower($2)"\t"$3}' >editor.results.tolower
+perl ~/scripts/two-common-fields-join.pl editor.results.tolower phrase-score.txt | cut -f 1,2,3,6 | awk '{if($0!~/N\/J/)print $0}'>judge-pscore.txt
+

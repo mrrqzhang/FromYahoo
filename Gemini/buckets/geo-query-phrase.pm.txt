@@ -1,0 +1,64 @@
+address in oakland	address	token
+sportstime elmsford ny	sportstime	organization_name
+nike outlet of atlanta	nike	brand_name
+hostels in arthurs pass	hostels	business
+macy nashville	nashville	place_name
+hotels in totem lake washington	hotels	business
+gifttree portland	gifttree	organization_name
+jacksboro shopko	shopko	organization_name
+where to buy curtains in miami	curtains	product
+walmart bremerton, wa	walmart	organization_name
+cape girardeau petco	petco	organization_name
+ticketmaster pittsburgh pa	ticketmaster	organization_name
+subaru.com usa	subaru.com	domain
+hallmark raleigh nc	hallmark	organization_name
+IPL in Naples FL	ipl	organization_name
+hca hospitals in texas	hca	organization_name
+verizon 83815	verizon	organization_name
+electricians in new Holland PA	electricians	token
+sallisaw walmart	walmart	organization_name
+walmart in campbellsville ky	walmart	organization_name
+amazon shakopee jobs	amazon	organization_name
+walmart mcdonough	walmart	organization_name
+chair for bedroom desk scranton	chair	product
+attorneys in columbus for tennants rights	attorneys	business
+weather for 16124	weather	token
+Verizon 83815	verizon	organization_name
+walmart gibsonia, pa	walmart	organization_name
+walmart navarre florida	walmart	organization_name
+restaurants in dumas ar	dumas	place_name
+walmart billings mt	walmart	organization_name
+3xl alabama hoodies	hoodies	product
+walmart east greenbush ny	walmart	organization_name
+walmart hawaii oahu	walmart	organization_name
+Flanders, NJ	flanders	place_name
+Gouville Vanderbilt	vanderbilt	organization_name
+apartments near suffield ct	apartments	business
+electrician methuen ma	electrician	token
+Lakville Minnesota Weather	weather	token
+dickies pants williamsburg ba	dickies	brand_name
+walmart eastlake chula vista ca	walmart	organization_name
+how mich do rabbits cost petco long island 11746	petco	token
+samsung experience new york	samsung	brand_name
+opentable philadelphia	opentable	organization_name
+dominos 19128	dominos	organization_name
+girl uk sweatshirt	sweatshirt	product
+groupon los angeles	groupon	token
+walmart coral way miami fl	walmart	organization_name
+condos on herndsn fresno ca	condos	token
+wyndham este park	wyndham	organization_name
+safelink phone services for illinois	safelink	token
+groupon san francisco nutcracker	groupon	token
+town hall for easton, conn	easton	place_name
+walmart tustin ca	tustin	place_name
+amazon reno	amazon	organization_name
+storage mesquite tx	storage	token
+darien equinox hours	equinox	event_name
+sixt rental denver	sixt	organization_name
+inexpensive movers in burlington	movers	business
+kansas city herbergers	herbergers	organization_name
+pharmacist job available in fort smith ar	pharmacist	token
+petco huntsville al	petco	organization_name
+comcast chico ca	comcast	organization_name
+nanny in ankeny	nanny	token
+condos in queens to buy	condos	business
