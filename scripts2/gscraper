@@ -1,0 +1,88 @@
+#!/usr/local/bin/perl
+use strict;
+use Getopt::Long;
+
+my $scraper = "/home/jchow/work/rtools/src/bin/nquery_engines2.pl";
+my $engine="Google::Websearch";
+my $num = 10;
+my ($qfile, $q, $verbose);
+
+my $Usage = <<Use;
+Usage: [-q=s | -qf=s]  [-n=s] \n
+options:
+  -q  QUERY      the input is only one query
+  -qf FNAME      the input is a file of queries
+  -n NUMRES        number of results
+Use
+
+GetOptions(
+  'n=s' => \$num,
+  'engine=s' => \$engine,
+  'qf=s' => \$qfile,
+  'v' => \$verbose,
+  'q=s' => \$q,
+) || die $Usage;
+
+my $RTOOLS_PERL_LIB="/home/jchow/work/rtools/src/modules";
+my $engineFile = create_engine_file($engine);
+my $tmpqfile;
+if ($q) {
+  $tmpqfile=create_qfile($q);
+  $qfile = $tmpqfile;
+}
+
+if (! $qfile) {die $Usage;}
+
+
+my $cmd = "RTOOLS_PERL_LIB=$RTOOLS_PERL_LIB $scraper -e $engineFile -q $qfile -n $num";
+print STDERR "cmd=$cmd\n" if ($verbose);
+
+open(S, "$cmd 2> /dev/null |") || die "can't run $cmd: $!\n";
+my @urls;
+my $query;
+
+while(<S>) {
+  if (/^Query: (.*)$/) {
+     my $new_query = $1;
+     print_urls($query) if (@urls);
+     @urls = ();
+     $query=$new_query;
+  } elsif (/^\s+Url: (.*)/) {
+     push(@urls, $1);
+  }
+}
+
+#print the last one
+print_urls($query) if (@urls);
+
+close(S);
+unlink($tmpqfile);
+
+sub print_urls {
+  my ($query) = @_;
+#  print "=== $query\n";
+  my $i=0;
+  for (@urls) {
+     print ++$i,"\t$query\t$_\n";
+  }
+}
+
+sub create_engine_file {
+  my ($engine) = @_;
+  my $f = "/tmp/engine.$engine";
+  if (! -s $f) {
+     open(F, ">$f");
+     print F "$engine\n";
+     close(F);
+  }
+  return $f;
+}
+
+sub create_qfile {
+  my ($q) = @_;
+  $tmpqfile = "/tmp/scraper.$$";
+  open(T, ">$tmpqfile");
+  print T "$q\n";
+  close(T);
+  return $tmpqfile;
+}

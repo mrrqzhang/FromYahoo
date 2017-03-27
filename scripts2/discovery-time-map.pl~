@@ -1,0 +1,19 @@
+use strict ;
+my $http ;
+my %map=() ;
+my $year ;
+while(<>) {
+  chomp() ;
+#  print "$_\n" ;
+  if( $_ =~ /^http/ ) {
+    $http = $_ ;
+    <> ;
+    <> ;
+    $year = <> ;
+
+#    print "$year\n" ;
+   if( $year =~ /^2008/) {
+      print "$http\n" ;
+    }
+  }
+}

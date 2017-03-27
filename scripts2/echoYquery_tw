@@ -1,0 +1,389 @@
+#!/usr/releng/bin/perl
+
+#copied from /home/xing/bin
+#modified to take input from stdin 
+
+use strict;
+use IO::Socket;
+
+my $yquerymarket="us";
+my $yqueryport = 55555;
+my $yquerysock = 0;
+my $yqueryquery = "";
+my $yquerycluster = "k";
+my $yquerydisablerewriters = 1;
+my $yqueryresult = "";
+my $yquerysearch = 1;
+my $yquerydocdata = 0;
+my $yquerysearchdocdata = 0;
+my $yqueryremnants = 0;
+my $yqueryifile = "";
+
+sub usage {
+    print "This tool translates your input query into the YQUERY format\n";
+    print "You can supply the following parameters - if they are optional,\n";
+    print "the default values will be used.\n";
+    print "Usage: echoYquery [-options] query\n";
+    print "       echoYquery -s fastcrawl 'ALLWORDS(new york city)'\n";
+    print "       echoYquery -s m10n -r 'ALLWORDS(new york city)'\n";
+    print "       echoYquery -o 'ALLWORDS(new york city)'\n";
+    print "       echoYquery -i inputfilename\n";
+    print "options: -h    help information\n";
+    print "         -p    translating proxy port number (default: 55555) e.g. -p 55555\n";
+    print "         -s    search cluster that you want the YQUERY to go to (default: k) e.g. -s fastcrawl\n";
+    print "         -r    enable QRW rewriters (default: disabled) e.g. -r\n";
+    print "         -o    get docdata YQUERY\n";
+    print "         -t    get both search & docdata YQUERY in two separate lines\n";
+    print "         -e    get both search & docdata YQUERY in one line\n";
+    print "         -q    get query remnants\n";
+    print "         -i    input query file name\n";
+}
+
+my %mscut  = ();
+$mscut{id} = [qw(yahooid  wownrm-id    indonesian yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{my} = [qw(yahoomy  wownrm-en-my    english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{ph} = [qw(yahooph  wownrm-en-ph    english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{sg} = [qw(yahoosg  wownrm-en-sg english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{th} = [qw(yahooth  wownrm-ms    thai       yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{vn} = [qw(yahoovn  wownrm-vi  vietnamese       yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{ca} = [qw(yahooca  wow-en-ca    english    yahoo-northam-west.idp.inktomisearch.com)];
+$mscut{au} = [qw(yahooau  wownrm-en-au english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{jp} = [qw(yahoojp  wownrm-jp    japanese   idpproxy-jp.idp.inktomisearch.com)];
+$mscut{jp} = [qw(yahoojp  wownrm-jp    japanese   idpproxy-yahoojp1.idp.inktomisearch.com)];
+$mscut{us} = [qw(yahoous2 wow-en-us    english    eagle-west-proxy.idp.inktomisearch.com)];
+$mscut{in} = [qw(yahooin  wownrm-en-in english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{uk} = [qw(yahoouk  wownrm-en-gb english    yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{kr} = [qw(yahookr  wownrm-kr    english    idpproxy-yahoo1.idp.inktomisearch.com)];
+$mscut{ar} = [qw(yahooar  wownrm-es-ar spanish    yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{es} = [qw(yahooes  wownrm-es    spanish    yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{e1} = [qw(yahooe1  wownrm-es-us spanish    yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{br} = [qw(yahoobr  wownrm-pt-br portuguese yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{cn} = [qw(yahoocn  cn2nrm-zh-cn chinese-simplified idpproxy-china.idp.inktomisearch.com)];
+$mscut{mx} = [qw(yahoomx  wownrm-es-mx spanish    yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{it} = [qw(yahooit  wownrm-it    italian    yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{fr} = [qw(yahoofr  wownrm-fr    french     yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{de} = [qw(yahoode  wownrm-de    german     yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{cade}=[qw(yahoobrcade  wownrm-pt-br portuguese yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{hk} = [qw(yahoohk  dewownrm-zh-hk chinese-traditional idpproxy-hk2.idp.inktomisearch.com)];
+#$mscut{tw} = [qw(yahootw  dewownrm-zh-tw chinese-traditional idpproxy-tpe.idp.inktomisearch.com)];
+#$mscut{tw} = [qw(yahootw  dewownrm-zh-tw chinese-traditional idpproxy-mlang1.idp)];
+$mscut{tw} = [qw(yahootwmlrresearch  dewownrm-zh-tw chinese-traditional yahoo-tw-proxy.idp.inktomisearch.com)];
+
+
+# flush stdout
+$| = 1;
+
+my $argnum = 0;
+while ($argnum <= $#ARGV) {
+    my $argname = $ARGV[$argnum];
+
+    if ($argname eq "-h") {
+        usage();
+        exit(0);
+    }
+    elsif ($argname eq "-m") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $argnum++;
+        $yquerymarket = $ARGV[$argnum];
+    }
+    elsif ($argname eq "-s") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $argnum++;
+        $yquerycluster = $ARGV[$argnum];
+
+        if ($yquerycluster eq "xorro") {
+            $yquerydisablerewriters = 0;
+        }
+    }
+    elsif ($argname eq "-r") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $yquerydisablerewriters = 0;
+    }
+    elsif ($argname eq "-o") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $yquerydocdata = 1;
+        $yquerysearch = 0;
+    }
+    elsif ($argname eq "-t") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $yquerydocdata = 1;
+        $yquerysearch = 1;
+    }
+    elsif ($argname eq "-e") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $yquerysearchdocdata = 1;
+        $yquerysearch = 0;
+    }
+    elsif ($argname eq "-q") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $yqueryremnants = 1;
+    }
+    elsif ($argname eq "-i") {
+        if ($argnum > $#ARGV) {
+            usage();
+            exit(0);
+        }
+        $argnum++;
+        $yqueryifile = $ARGV[$argnum];
+    }
+    else {
+        $yqueryquery = $argname;
+    }
+
+    $argnum++;
+}
+
+my $yqueryclient = $mscut{$yquerymarket}[0]; 
+my $yquerydb = $mscut{$yquerymarket}[1];
+my $yquerylanguage = $mscut{$yquerymarket}[2]; 
+my $yqueryhost = $mscut{$yquerymarket}[3];
+
+if (length($yqueryquery) > 0) {
+    # only one query from the command line
+    translate2yquery();
+}
+elsif ( $yqueryifile) {
+     # a query input file from stdin
+    my $ifline = "";
+    my $process = 0;
+    open(QRYIN, $yqueryifile) or die "can't open $yqueryifile\n";
+    my $qnum = 0;
+    while ($ifline = <QRYIN>) {
+        $qnum++;
+        chomp($ifline);
+        my @f = split /\t/, $ifline;
+        if ($f[0]) {
+            $yqueryquery = $f[0];
+            if (length($yqueryquery) > 0) {
+        ###        print "$yqueryquery\t";
+                $yqueryresult = translate2yquery();
+                #print "$yqueryresult\n";
+            }
+            else { print STDERR "ERROR EMPTY QUERY at line $qnum in file $yqueryifile\n"; }
+        }
+        else {
+            print STDERR "ERROR EMPTY QUERY at line $qnum in file $yqueryifile\n";
+        }
+    }
+}
+else{
+    # a query input file from stdin
+    my $ifline = "";
+    my $process = 0;
+
+    while ($ifline = <STDIN>) {
+        chomp($ifline);
+        if ($ifline =~ m/^\#yqueryhost=(\S+)$/) {
+            $yqueryhost = $1;
+        }
+        elsif ($ifline =~ m/^\#yqueryport=(\S+)$/) {
+            $yqueryport = $1;
+        }
+        elsif ($ifline =~ m/^\#yquerycluster=(\S+)$/) {
+            $yquerycluster = $1;
+        }
+        elsif ($ifline =~ m/^\#yqueryclient=(\S+)$/) {
+            $yqueryclient = $1;
+        }
+        elsif ($ifline =~ m/^\#yquerydisablerewriters=(\S+)$/) {
+            $yquerydisablerewriters = $1;
+        }
+        elsif ($ifline =~ m/^\#yquerydb=(\S+)$/) {
+            $yquerydb = $1;
+        }
+        elsif ($ifline =~ m/^\#yquerylanguage=(\S+)$/) {
+            $yquerylanguage = $1;
+        }
+        elsif ($ifline =~ m/^\#yquerysearch=(\S+)$/) {
+            $yquerysearch = $1;
+        }
+        elsif ($ifline =~ m/^\#yquerydocdata=(\S+)$/) {
+            $yquerydocdata = $1;
+        }
+        elsif ($ifline =~ m/^\#yquerysearchdocdata=(\S+)$/) {
+            $yquerysearchdocdata = $1;
+        }
+        elsif ($ifline =~ m/^\#yqueryremnants=(\S+)$/) {
+            $yqueryremnants = $1;
+        }
+        elsif ($ifline =~ m/^\#(.*)$/) {
+            #comment line, just skip
+        }
+        elsif ($ifline =~ m/^\s*(.*)$/) {
+            $yqueryquery = $1;
+            print "HERE";
+            if (length($yqueryquery) > 0) {
+                $yqueryresult = translate2yquery();
+                #print "$yqueryresult\n";
+            }
+        }
+    }
+}
+
+sub translate2yquery {
+    my $result = "";
+
+    #print "$yqueryclient, $yqueryquery, $yquerycluster, $yquerydb, $yquerylanguage, $yquerydisablerewriters, $yqueryhost\n";
+    $yquerysock = startConnection();
+    if ($yquerysock) {
+        my @cmdBlock = getCmdBlock();
+        $result = executeQuery(@cmdBlock);
+        if ($yquerysock) {
+            close $yquerysock;
+        }
+    }
+
+    return $result;
+}
+
+sub getCmdBlock
+{
+    my @cmdBlock;
+
+    push(@cmdBlock, "search");
+    push(@cmdBlock, "query:$yqueryquery");
+    push(@cmdBlock, "database:$yquerydb");
+    push(@cmdBlock, "fields:url");
+    push(@cmdBlock, "firstresult:0");
+    push(@cmdBlock, "numresults:1");
+    push(@cmdBlock, "querylanguage:$yquerylanguage");
+    push(@cmdBlock, "queryencoding:utf-8");
+    push(@cmdBlock, "unique:doc,host 2");
+    push(@cmdBlock, "permitpragma:1");
+    push(@cmdBlock, "pragma:argoverride");
+    #push(@cmdBlock, "DqhEnable:0");
+    push(@cmdBlock, "echoyquery:$yquerycluster");
+
+    if ($yquerydisablerewriters == 1) {
+        push(@cmdBlock, "qrwdisableallrewriters:true");
+    }
+    if ($yquerydocdata == 1) {
+        push(@cmdBlock, "echodocdatayquery:true");
+    }
+    if ($yquerysearchdocdata == 1) {
+        push(@cmdBlock, "echosearchdocdatayquery:true");
+    }
+    if ($yqueryremnants == 1) {
+        push(@cmdBlock, "echoyqueryremnants:true");
+    }
+
+    chomp(@cmdBlock);
+
+    return @cmdBlock;
+}
+
+
+sub startConnection
+{
+    my $sock = new IO::Socket::INET(PeerAddr => $yqueryhost, 
+                                    PeerPort => $yqueryport, Proto => 'tcp');
+    
+    if ($sock) {
+        $sock->autoflush(1);
+
+        print $sock "IDP/1.0\n" .
+                  "Client:$yqueryclient\n";
+        print $sock "KeepAlive:0\n\n";
+   }
+
+    return $sock;
+}
+
+sub executeQuery
+{
+    my (@cmdBlock) = @_;
+    my $line = "";
+    my $replyLines = 0;
+    my $result = "";
+    my @replyBlock = [];
+
+    if ($yquerysock) {
+        my $cmd = join("\n", @cmdBlock);
+#	print "$cmd\n";
+	#sleep(1); ### added by Rao 02/04/2008 ###so far, sleep(2) OK, but too slow, may try sleep(1)
+        print $yquerysock "$cmd\n\n";
+
+        $replyBlock[0] = <$yquerysock>;
+        if (defined($replyBlock[0])) {
+            ($replyLines) = $replyBlock[0] =~ /^.+ \d+ (\d+)/;
+            my $printed = 0;
+            foreach $_ (1 .. $replyLines) {
+                $line = <$yquerysock>;
+		###print STDERR "$line\n";
+                chomp($line);
+                if ($yquerysearch == 1) {
+		   if ($line =~ m/^Phase0($yquerycluster)SearchYquery:\s+(.*)$/) {
+                        $result = $2;
+                        ###print "$result\n";
+                        print "$yqueryquery\t$result\t";   ###commentd by Rao 02/01/2008
+                        &printNormQry($result);      ###added by Rao 02/01/2008
+			$line = <$yquerysock>;
+			next;
+                    }
+                    elsif ($line =~ m/^($yquerycluster)SearchYquery:\s+(.*)$/) {
+                        $result = $2;
+			print "$yqueryquery\t$result\t";
+			&printNormQry($result);
+                        ###print "$result\t";	###commentd by Rao 02/01/2008
+                        ###&printNormQry($result);###commentd by Rao 02/01/2008
+                    }
+                }
+                if ($yquerydocdata == 1 || $yquerysearchdocdata == 1) {
+                    if ($line =~ m/^($yquerycluster)DocdataYquery:\s+(.*)$/) {
+                        $result = $2;
+                        print "$result\n";
+                    }
+                    elsif ($line =~ m/^Phase0($yquerycluster)DocdataYquery:\s+(.*)$/) {
+                        $result = $2;
+                        print "$result\n";
+                    }
+                }
+            }
+        }
+
+        close $yquerysock;
+        $yquerysock = 0;
+    }
+
+    return $result;
+}
+
+sub printNormQry {
+    my $yquery = shift;
+    #extract normalized query from yquery
+    my $normquery="";
+    my $st= index($yquery, "<");
+    my $ed=0;
+    while($st!=-1) {
+        $ed=index($yquery, ">", $ed+1);
+        if ($normquery eq "") {
+            $normquery = substr($yquery, $st+1, $ed-$st-1);
+        }
+        else {
+            $normquery .= " ".substr($yquery, $st+1, $ed-$st-1);
+        }
+        $st= index($yquery, "<", $st+1);
+    }
+    print "$normquery\n";
+}

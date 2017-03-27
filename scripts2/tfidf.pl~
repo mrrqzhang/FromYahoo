@@ -1,0 +1,16 @@
+#!/usr/releng/bin/perl
+
+%tf = () ;
+%df =() ;
+
+while (<>) {
+  chomp() ;
+  @fields = split /\t/ ;
+  @words = split ' ', $fields[0] ;
+  if( $fields[2] =~ /^\d*$/ ) {
+    $tf{$fields[0]} += $fields[2] ;
+  }
+  for(i=0;i<=$#words; i++) {
+    $df{$words[$i]} += 1 ;
+  }
+} 

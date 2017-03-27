@@ -1,0 +1,62 @@
+
+my $year1="" ;
+my $year2 = "" ;
+my $query ="" ;
+my $maxyear="" ;
+my $firstyear="" ;
+my $num=0 ;
+my $total=0 ;
+while(<>) {
+  chomp ;
+  if(/^Query\:/) {
+    /Query: ALLWORD(.*)/ ;
+    $query = $1 ;
+    $rank = 0 ;
+
+    if($firstyear ne "") {
+      if($maxyear gt $firstyear) {
+	$num++ ;
+      }
+    }
+    $firstyear="" ;
+    $maxyear="" ;
+    $total ++ ;
+    next ;
+  }
+  $rank ++ ;
+  $url = <> ; chomp($url) ;
+  $title = <> ; chomp ($title);
+  $abstract = <> ; chomp ($abstract);
+  $score = <> ; chomp($score) ;
+  
+  $year1="" ;
+  $year2 = "" ;
+  
+  if( $url =~ /(200[0-9])/ ) {
+    $year1 = $1 ;
+  }
+  if( $title =~ /(200[0-9])/ ) {
+    $year2 = $1 ; 
+  }
+
+  my $year = "" ;
+  if( $year1 ge $year2 ) {
+    $year = $year1 ;
+  }
+  else {
+    $year = $year2 ;
+  }
+  
+  if ( $year ne "" ) {
+    if($rank==1) {
+      $firstyear=$year ;
+    }
+
+    if($maxyear lt $year) {
+      $maxyear=$year ;
+    }
+
+    print "$query\t$url\t$year\t$score\n" ;
+  }
+}
+print "$total $num" ;

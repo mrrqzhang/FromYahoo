@@ -1,0 +1,34 @@
+
+
+
+
+
+my $QL ;
+
+
+open QL, "<total_uniq_query.txt" ;
+
+while(<QL>){
+  chomp ;
+  $ql{$_}=1 ;
+}
+
+$yes = 0 ;
+while(<>) {
+  chomp() ;
+
+  if($_ =~ /Query: (.*)/) {
+
+    $thisquery=$1 ;
+    if( defined ($ql{$1}) ) {
+      $yes=1 ;
+      printf "$_\n" ;
+    }
+  }
+  if($_ =~ /    Url\:/ && $yes==1) {
+    printf "$_\n" ;
+  }
+  if($_ =~ /  Engine\:/ && $yes==1) {
+    printf "$_\n" ;
+  }
+}

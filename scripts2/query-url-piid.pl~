@@ -1,0 +1,6 @@
+#input piid query-url and feature.csv judgedset.txt.trimmed
+#output new query-url and feature.csv without piid judgedset.txt.trimmed
+
+use strict ;
+
+

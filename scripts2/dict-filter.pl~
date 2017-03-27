@@ -1,0 +1,23 @@
+#!/usr/releng/bin/perl
+
+
+
+open DICT, "<$ARGV[0]" ;
+
+
+$num=0 ;
+while(<DICT>) {
+  chomp() ;
+  $dict{$_}=$num ;
+  $num++ ;
+}
+
+
+open INPUT, "<$ARGV[1]" ;
+
+$num=0 ;
+
+while(<INPUT>) {
+  chomp () ;
+  @words = split /\t/ ;
+  

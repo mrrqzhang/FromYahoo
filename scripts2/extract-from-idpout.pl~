@@ -1,0 +1,19 @@
+
+$count = 8;
+while (<>) {
+  if ( $_ =~ /^Query\:/ ) {
+    print $_ ;
+  }
+  if ($_ =~ /^http\:/ && $count ==8 ) {
+    printf "\n" ;
+    $count = 1 ;
+  }
+  if ( $count != 8) {
+    if ( $count==1 || $count==2 || $count==4 || $count==7) {
+      print $_ ;
+
+    }
+    $count ++ ;
+  }
+}
+    

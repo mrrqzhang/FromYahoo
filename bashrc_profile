@@ -1,0 +1,88 @@
+export LC_ALL=C
+export PYTHONIOENCODING=UTF-8
+export https_proxy=https://httpproxy-res.blue.ygrid.yahoo.com:4080
+export http_proxy=http://httpproxy-res.blue.ygrid.yahoo.com:4080
+export qldir="/home/pranav/projects_quicklink/generator/generator"
+alias pip34="/homes/ruiqiang/tools/Python-3.4.4/bin/pip3.4"
+alias pip27="/homes/ruiqiang/tools/Python-2.7.11/bin/pip2.7"
+alias easy_install27="/homes/ruiqiang/.local/bin/easy_install-2.7"
+
+alias python26="/usr/bin/python"
+alias vi="vim"
+alias nctr="sudo -u cb_nctr bash"
+alias cbquad="sudo -u cb_quad bash"
+alias srcbas="source ~/.bashrc"
+alias vibash="vim ~/.bashrc"
+alias ll="ls -l -r -t"
+export jetblue="gwbl768n01.blue.ygrid.yahoo.com"
+export nb7="gwbl6107.blue.ygrid.yahoo.com"
+export fd8="searchdev08.ysl.corp.gq1.yahoo.com"
+export hp="echo \`hostname\`:\`pwd\`"
+alias  pranav="ssh b111134.yse.yahoo.net"
+#export PATH="/home/jyj/mylib:/usr/local/bin/:$PATH"
+export PYTHONPATH="/homes/ruiqiang/PythonPkg/numpy-python2.7//lib/python2.7/site-packages:/homes/ruiqiang/PythonPkg/numpy-python3.4//lib/python3.4/site-packages:/homes/ruiqiang/PythonPkg/numpy-python3.4/:/homes/ruiqiang/PythonPkg/marisa-python3.4-site-packages/:/homes/ruiqiang/pythonlib:/homes/ruiqiang/MyPythonLib:$PYTHONPATH:/homes/ruiqiang/tools/scipy:/homes/ruiqiang/tools/sklearn:/homes/ruiqiang/tools/cython:/homes/ruiqiang/tools/nose-1.0.0:/homes/ruiqiang/tools/nose:/homes/ruiqiang/tools/numpy-1.11.0rc1:/homes/ruiqiang/tools/numpy-1.11.0rc1/lib64/python2.6/site-packages:/homes/ruiqiang/tools/scipy/scipy-0.16.0-py2.6-linux-x86_64.egg/"
+function hpf() {
+echo `eval $hp`/$1
+}
+function pf() {
+echo `pwd`/$1
+}
+
+export LC_ALL=C
+
+#export HADOOP_HOME="/export/crawlspace/hadoop-0.23.10.1.1405021133/"
+export HADOOP_CONF_DIR=/home/gs/conf/current
+#export HADOOP_PREFIX=/export/crawlspace/hadoop_prefix_dir_current
+alias hstream='hadoop jar $HADOOP_HOME/hadoop-streaming.jar -Dmapred.job.queue.name='$QUEUE
+
+#export HADOOP_CLASSPATH=/homes/ruiqiang/hadoop_conf/
+export  PATH=/export/crawlspace/hadoop/java/jdk/bin/:/export/crawlspace/hadoop/bin/:${PATH}
+
+export JAVA_HOME=/home/gs/java/jdk
+export PATH=$HOME/mylib/titlelibs/:/homes/ruiqiang/tools/apache-ant-1.9.6/bin:$HOME/jython/bin:$HOME/mylib:$HOME/bin/:/home/gs/hadoop/current/bin/:/usr/local/bin:/homes/ruiqiang/y/bin64:/home/y/bin:/export/crawlspace/hadoop/java/jdk/bin/:/export/crawlspace/hadoop/bin/:/home/y/bin64:/usr/kerberos/bin:/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/bin:/export/crawlspace/quicklinks/redis-2.8.9/src/:/home/jyj/quicklinks/mvn/apache-maven-3.2.3/bin
+alias yarnlist="yarn application -list  | grep ruiqiang"
+alias yarnkill="yarn application -kill"
+alias rm="rm -i"
+alias mq="mapred queue -showacls"
+alias hfs='hadoop fs'
+alias hls='hadoop fs -ls'
+alias hrm='hadoop fs -rm'
+alias hrmr='hadoop fs -rm -r'
+alias hput='hadoop fs -put'
+alias hget='hadoop fs -get'
+alias hpush='hadoop fs -copyFromLocal'
+alias hpull='hadoop fs -copyToLocal'
+alias hcat='hadoop fs -cat'
+alias hmkdir='hadoop fs -mkdir'
+alias hcp='hadoop fs -cp'
+alias hchmod='hadoop fs -chmod'
+alias hmv='hadoop fs -mv'
+alias hgetmerge='hadoop fs -getmerge'
+#alias hkill='hadoop job -kill'
+alias hkill='mapred job -kill'
+alias hlist='hadoop job -list'
+alias hstatus='hadoop job -status'
+# below from narayanb
+alias hstream='hadoop jar $HADOOP_HOME/hadoop-streaming.jar -Dmapred.job.queue.name='$QUEUE
+alias hcount='hadoop dfs -count'
+alias htext='hadoop fs -text'
+alias vi='/homes/ruiqiang/tools/vim/src/vim'
+
+# concatenate all part files in given directory
+hpartcat () { hadoop fs -cat $1/part-* ; }
+
+# concatenate all part files in given directory, piped to less
+hpartless () { hadoop fs -cat $1/part-* | less ; }
+# get total size of files in given directory
+# note: doesn't recurse, gives only sum of first-level files
+#hdu () { hadoop fs -ls $1 | awk '{tot+=$5} END {print tot}' ; }
+alias hdu='hadoop fs -du -h'
+alias hdjobs='mapred job -list | grep ruiqiang'
+alias hdjobsall="mapred job -list"
+alias locpy=~/.localpython/bin/python
+
+PS1="\H [\W] $ "
+#alias python='$HOME/tools/Python-3.4.4/bin/python3'
+alias python='$HOME/tools/Python-2.7.11/python'
+alias pip=pip27
+export PATH=$PATH:/$HOME/tools/Python-2.7.11/bin

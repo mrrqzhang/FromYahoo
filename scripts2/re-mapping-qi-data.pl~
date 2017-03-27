@@ -1,0 +1,5 @@
+
+open MFOLD, "$ARGV[0]" ; #mapping file old
+open MFNEW, "$ARGV[1]" ; #mapping file new
+open 
+

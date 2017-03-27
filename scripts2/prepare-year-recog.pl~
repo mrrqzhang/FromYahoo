@@ -1,0 +1,41 @@
+use strict ;
+
+my $http ;
+my %map=() ;
+my $year ;
+my $url;
+my $rawscore ;
+my $dtime ;
+my $lastmod ;
+my $contentmod ;
+my $recentlink ;
+my $hosttrust ;
+
+print "query\turl\ttitle\tdtime\tlastmod\trecentlink\tweightrecentlink\n" ;
+
+my $thisquery ;
+while(<>) {
+  chomp() ;
+#  print "$_\n" ;
+  if(  /QUERY_NUMBER\:\d*\t(.*)/) {
+    $thisquery = $1 ;
+  }
+  if( $_ =~ /^http/ ) {
+    $url = $_ ; chomp($url) ;
+    $title = <> ; chomp($title) ;
+    if( !($title =~ /(200[0-9])/ || $url =~ /(200[0-9])/) ) { next ;}
+    $rawscore = <> ; chomp($rawscore) ;
+    $dtime = <> ; chomp($dtime) ;
+    <> ;
+    $lastmod = <> ; chomp($lastmod) ;
+
+    $datemin = <> ; chomp($datemin) ;
+    $datemax = <> ; chomp($datemax) ;
+
+    $recentlink = <> ; chomp($recentlink) ;
+    <> ;
+
+
+    print "$thisquery\t$url\t$rawscore\t$dtime\t$lastmod\t$contentmod\t$recentlink\t$hosttrust\n"
+  }
+}

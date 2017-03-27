@@ -1,0 +1,42 @@
+#!/usr/releng/bin/perl
+
+open IN, "<$argv[0]" ;
+
+
+%dict=() ;
+
+while(<>) {
+  chomp(); 
+  @words = split /\t/ ;
+  $query = $words[0] ;
+#  if($query =~ /^[[:alnum:]\s]*$/ ) {next;} 
+  @words = split ' ', $query ;
+  
+  for($i=0;$i<=$#words; $i++) {
+    if ($words[$i] =~ /^[[:alnum:]]*$/ ) {next;} 
+#    print "$words[$i]\n" ;
+    $dict{$words[$i]} += 1 ;
+  }
+}
+
+exit ;
+
+while(<>) {
+  chomp() ;
+  @words = split ' ' ;
+  $len = $#words ;
+  $start=0;
+  $end=$len+1 ;
+  while ($start!=end) {
+    $query = get_words($start, $end, \@words) ;
+    if ( defined $dict{$query} ) {
+      print "$query " ;
+      $start=$end  ;
+      $end = $len+1 ;
+    }
+    else {
+      $end -- ;
+    }
+  }
+}
+

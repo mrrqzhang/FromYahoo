@@ -1,0 +1,28 @@
+#!/usr/releng/bin/perl
+
+$samples = 400 ;
+
+@dict=() ;
+$num=0 ;
+while(<>) {
+  chomp() ;
+
+  $dict[$num]=$_ ;
+  $num++ ;
+}
+$total = $num ;
+
+$i=0 ;
+
+
+
+
+while( $i != $samples ) {
+  $r =int( $total*rand ) ;
+  if( $dict[$r] ne "") {
+    print "$dict[$r]\n" ;
+    $dict[$r]="" ;
+    $i++ ;
+  }
+}
+

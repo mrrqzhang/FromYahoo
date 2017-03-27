@@ -1,0 +1,48 @@
+use strict ;
+
+my %usedfeature=()  ;
+
+my $UF ;
+my $CSV ;
+my @csv ;
+
+open UF, "<used_features.txt" ;
+
+while (<UF>) {
+  chomp() ;
+  my @fields = split "," ;
+  for (my $i=0;$i<=NF; $i++) {
+    $usedfeature{$fields[$i]} = 1 ;
+  }
+}
+
+open CSV, "<$ARGV[0]" ;
+<CSV> ;
+chomp() ;
+my fields = split "," ;
+for (my $i=0;$i<=NF;$i++) {
+  $csv[$i]=0 ;
+  if( defined $usedfeature{$fields[$i]} ) {
+    $csv[$i]=1 ;
+    printf "$fields[$i]" ;
+  }
+  if($i!=NF) {printf ",";};
+  else {printf "\n" ;} ;
+  
+}
+
+
+
+
+while(<CSV>) {
+  chomp() ;
+  my @fields = split "," ;
+  for (my $i=0;$i<=NF;$i++) {
+    if ( $csv[$i]==1 ) {
+      printf "$fields[$i]" ;
+    }
+  if($i!=NF) {printf ",";};
+  else {printf "\n" ;} 
+}      
+
+

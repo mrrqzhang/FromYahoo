@@ -1,0 +1,32 @@
+#!/bin/sh
+
+org=$1
+imp=$2
+
+temp=$$
+
+echo "overall performance"
+python /home/zhaohui/tools/signtest/wilcoxon.newversion.py $org $imp
+
+sh ~/scripts/merge-two-files.pl $org $imp >! $temp.1
+
+awk 'BEGIN{FS="\t"}{if($6>$3) printf "%s\t%s\t%s\n",$1,$2,$3}' $temp.1 >! $temp.g.1
+
+awk 'BEGIN{FS="\t"}{if($6>$3) printf "%s\t%s\t%s\n",$4,$5,$6}' $temp.1 >! $temp.g.2
+
+echo "Improved query"
+wc -l $temp.g.1
+python /home/zhaohui/tools/signtest/wilcoxon.newversion.py $temp.g.1 $temp.g.2
+
+echo "No changed query"
+awk 'BEGIN{FS="\t"}{if($6==$3) printf "%s\t%s\t%s\n",$1,$2,$3}' $temp.1 >! $temp.g.1
+wc -l  $temp.g.1
+
+echo "Worse queries"
+awk 'BEGIN{FS="\t"}{if($6<$3) printf "%s\t%s\t%s\n",$1,$2,$3}' $temp.1 >! $temp.g.1
+
+awk 'BEGIN{FS="\t"}{if($6<$3) printf "%s\t%s\t%s\n",$4,$5,$6}' $temp.1 >! $temp.g.2
+
+wc -l $temp.g.1 
+python /home/zhaohui/tools/signtest/wilcoxon.newversion.py $temp.g.1 $temp.g.2
+

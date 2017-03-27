@@ -1,0 +1,336 @@
+#!/usr/local/bin/perl -w
+use strict;
+use Getopt::Long;
+use IO::Socket::INET;
+
+#### sriharir@yahoo-inc.com Nov/2006
+
+my %o = ();
+my $idpblock = "";
+my $qrynum = 0;
+my %rmix = ();
+my %lmix = ();
+
+my $usage = 
+	 "  RunQueries.pl <options>
+       -mode prod|mlr   default: no default value. Mode has to be explicitly specified.
+                        Use MLR whenever you request rankfeatures - uses 58 as a default rescore scheme.
+                        Use prod when you want production settings - no MLR scheme should be specified in prod mode.
+       -market          short cut for market specific client,db,language and proxy
+       -bracket 0|1     default: 0
+       -quote 0|1       default: 0
+       -yqry  0|1       default: 0
+       -mlrfunc         MLR-number or irf
+       -override        default: 0 for production mode and 1 for mlr mode
+       -trace 0|1       default: 0 - Set to see the module trace in the proxy
+       -echo 0|1        defualt: 0 - Set to see what command is passed to each cluster.
+       -db DataBase     default: None - Don't specify db when local=1
+       -numres integer  default: 10 - Number of results
+       -port PortNumber default: 55555
+       -sleep Duration  default: 0.025s To limit the QPS.
+       -local 0|1       default: 0. Use 1 when using local search engine
+       -retry number    default: 10
+       -host Hostname   default: None.
+       -client Client   default: None
+       -lang Language   default: None
+       -fields          default: url,nodename,rawscore. Specify additional fields as a csv list.
+       -rlfile file     default: /home/sriharir/irdev4/Tool/bin/RLMixes
+                        file containing rlmix-name,regionmix,lanuagemix space separated  
+       -lmix            default: None. 
+                        abbrevation from RLmix file or explicit. E.g '1*english'
+       -rmix            default: None. 
+                        abbrevation from RLmix file or explicit. E.g '1*prob_us'
+       -vcano 0|1       default: 0 - vcano applies only for Japan
+       -blend 0|1       default: 0 - blend applies only for Japan
+       -xorro 0|1       default: 0 for prod mode 1 for mlr mode
+       -jpscript 0|1    default: 1 for turning on/off IntlAnnotatorOptions:bytelength,jpscript1
+       -usdict 0|1|7    default:0 turns on appropriate usdict by adding extra idplines
+       -ukdict 0|1      default:0 turns on appropriate ukdict by adding extra idplines
+       -uniq 0|1|2|-1   default:2 turn on/off uniquing. 2=>unique:doc, host 2  1=>UNIQUE(...) 0=>nothing. Use 1 only in offline tests.
+       -add             adds other parameters to idpblock - separate multiple lines by \\\\n\n\n";
+
+my %mscut  = ();
+$mscut{ca} = [qw(yahooca  wow-en-ca    english    yahoo-northam-west.idp.inktomisearch.com)];
+$mscut{au} = [qw(yahooau  wownrm-en-au english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{jp} = [qw(yahoojp  wownrm-jp    japanese   idpproxy-jp.idp.inktomisearch.com)];
+$mscut{jp} = [qw(yahoojp  wownrm-jp    japanese   idpproxy-yahoojp1.idp.inktomisearch.com)];
+$mscut{us} = [qw(yahoousresearch2 wow-en-us    english   yahoo-east-proxy.idp.inktomisearch.com)];
+$mscut{in} = [qw(yahooin  wownrm-en-in english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{uk} = [qw(yahoouk  wownrm-en-gb english    yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{sg} = [qw(yahoosg  wownrm-en-sg english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{kr} = [qw(yahookrdocclassifiersresearch  wownrm-kr    english    idpproxy-yahoo1.idp.inktomisearch.com)];
+$mscut{ar} = [qw(yahooar  wownrm-es-ar spanish	  yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{es} = [qw(yahooes  wownrm-es    spanish	  yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{e1} = [qw(yahooe1  wownrm-es-us spanish	  yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{br} = [qw(yahoobr  wownrm-pt-br portuguese yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{cn} = [qw(yahoocn  cn2nrm-zh-cn chinese-simplified idpproxy-china.idp.inktomisearch.com)];
+$mscut{my} = [qw(yahoomy  wownrm-ms    english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{th} = [qw(yahooth  wownrm-ms    thai       yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{ph} = [qw(yahooph  wownrm-ms    english    yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{vn} = [qw(yahoovn  wow-en-us    NULL       yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{mx} = [qw(yahoomx  wownrm-es-mx spanish    yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{it} = [qw(yahooit  wownrm-it    italian    yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{fr} = [qw(yahoofr  wownrm-fr    french     yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{de} = [qw(yahoode  wownrm-de    german     yahoo-euro-west.idp.inktomisearch.com)];
+$mscut{cade}=[qw(yahoobrcade  wownrm-pt-br portuguese yahoo-latam-west.idp.inktomisearch.com)];
+$mscut{id} = [qw(yahooid  wownrm-ms    indonesian yahoo-asia-west.idp.inktomisearch.com)];
+$mscut{hk} = [qw(yahoohk  dewownrm-zh-hk chinese-traditional idpproxy-hk2.idp.inktomisearch.com)];
+$mscut{tw} = [qw(yahootwmlrresearch  dewownrm-zh-tw chinese-traditional yahoo-tw-proxy.idp.inktomisearch.com)];
+ 
+&main;
+
+sub main {
+	 
+	 ### Set defaults for some options ###
+	 $o{bracket}     = 0;
+	 $o{quote}       = 0;
+	 $o{proximity}   = 0;
+	 $o{port}        = 55555;
+	 $o{extrafields} = 0;
+	 $o{trace}       = 0;
+	 $o{numres}      = 10;
+	 $o{local}       = 0;
+	 $o{retry}       = 10;
+	 $o{vcano}       = 0;
+	 $o{blend}       = 0;
+	 $o{jpscript}    = 1;
+	 $o{rlfile}      = "/home/sriharir/irdev4/Tools/bin/RLMixes";
+	 $o{yqry}        = 0;
+	 $o{sleep}       = 0.025;
+	 $o{usdict}      = 0;
+	 $o{ukdict}      = 0;
+	 $o{uniq}        = 2;
+
+	 GetOptions
+		 (\%o, 
+		  'bracket=i',  'port=i',   'retry=i',       'fields=s',  'mode=s',  'sleep=f',
+		  'add=s',      'host=s',   'extrafields=i', 'mlrfunc=s', 'trace=i', 'yqry=i',
+		  'blend=i',    'rlfile=s', 'db=s',          'numres=i',  'local=i', 'lang=s',
+		  'client=s',   'vcano=i',  'lmix=s',        'rmix=s',    'echo=i',  'quote=i',
+		  'override=i', 'xorro=i',  'market=s',      'jpscript=i','usdict=i','uniq=i',
+		  'ukdict=i'
+		 ) || die $usage;
+	 
+	 die "Error: Mode not defined\n\n\t$usage" unless defined $o{mode};
+	 
+	 ### Load market specific shortcuts ###
+	 if (defined $o{market}) {
+		  $o{client} = $mscut{$o{market}}[0] unless defined $o{client};
+		  $o{db}     = $mscut{$o{market}}[1] unless defined $o{db};
+		  $o{lang}   = $mscut{$o{market}}[2] if ((!defined $o{lang}) and $mscut{$o{market}}[2] ne "NULL");
+		  $o{host}   = $mscut{$o{market}}[3] unless defined $o{host};
+		  $o{vcano}  = 1 if $o{market} eq "jp";
+		  $o{blend}  = 1 if $o{market} eq "jp";
+	 }
+	 
+	 if ($o{mode} eq "prod") {
+		  $o{override} = 0 unless defined $o{override};
+		  $o{xorro}    = 1 unless defined $o{xorro};
+	 }
+	 elsif ($o{mode} eq "mlr") {
+		  $o{override} = 1  unless defined $o{override};
+		  $o{mlrfunc}  = 58 unless defined $o{mlrfunc};
+		  $o{xorro}    = 0  unless defined $o{xorro};
+	 }
+	 else {
+		  die "Undefined mode: $o{mode}\n$usage";
+	 }
+	 # don't call loadrlmix to load rlmix file, to specify rlmix, use commandline line -rmix -lmix. -- ciya, 7/18/2008
+	 #&loadrlmix;
+	 &initIDP;
+	 while (<>) { chomp; $qrynum++; &runQry($_); }	 
+}
+
+sub initIDP {
+	 
+	 my $bracket_str = "";
+	 my $fields_str = "fields: url,nodename,rawscore";
+	 my $db_str = "";
+	 $db_str    = "database:$o{db}\n" if defined $o{db};
+	 my $trace_str = "";
+	 my $lang_str = "";
+	 $lang_str = "\nquerylanguage:$o{lang}" if defined $o{lang};
+	 my $param_str = "";
+	 my $override = "";
+	 
+	 $db_str = "" if $o{local};
+	 $trace_str = "\necho: 1\nmoduleTrace: 1" if $o{trace};
+	 $override = "argoverride" if $o{override};
+	 
+	 if ($o{bracket}) {
+		  $bracket_str = "\nadjwordgroup:bracket";
+	 }
+	 elsif ($o{quote}) {
+		  $bracket_str = "\nadjwordgroup:quote";
+	 }
+
+	 $fields_str .= ",rankfeatures" if $o{extrafields};
+	 if ($o{fields}) {
+		 my @fields = split /,/, $o{fields};
+		 foreach (@fields) {
+			 if($_ eq "regions") {
+				 $fields_str .= ",language,prob_us,prob_ca,prob_uk,prob_au,prob_nz,prob_latinamerica,prob_mx,prob_ar,prob_es,prob_nonregional,prob_cn,prob_de,prob_fr,prob_br,prob_sg,prob_in,prob_my,prob_ph,prob_vn,prob_it";
+			 }
+			 else {
+				 $fields_str .= ",$_";
+			 }
+		 } 
+	 }
+	 if (defined $o{mlrfunc} and $o{mlrfunc} ne "irf" ) {
+		  #$param_str = "params: score_func 2 which_params 7 rescorescheme $o{mlrfunc} extended 2";
+		  $param_str = "$o{mlrfunc}";#modified by Rao 10/31
+	 }
+	 elsif (defined $o{mlrfunc} and $o{mlrfunc} eq "irf" ) {
+		  $param_str = "params: score_func 2 which_params 6";
+	 }
+	 
+	 $idpblock = $db_str."numresults:$o{numres}"."\n".$fields_str."\n"."queryencoding:utf-8"; 
+	 $idpblock .= "\n".$param_str if $param_str;
+
+	 if (defined $o{rmix}) {
+		  if ($o{rmix} =~ /[*]/) {
+				#$idpblock .= "\nregionmix:$o{rmix}" ;	
+				$idpblock .= "\n$o{rmix}" ; #modified by Rao 10/31
+		  }
+		  else {
+				#$idpblock .= "\nregionmix:$rmix{$o{rmix}}";
+				$idpblock .= "\n$rmix{$o{rmix}}"; #modified by Rao 10/31
+		  }
+	 }
+	 if (defined $o{lmix}) {
+		  if ($o{lmix} =~ /[*]/) {
+				#$idpblock .= "\nlanguagemix:$o{lmix}";
+				$idpblock .= "\n$o{lmix}";#modified by Rao 10/31
+		  }
+		  else {
+				$idpblock .= "\nlanguagemix:$lmix{$o{lmix}}";
+				$idpblock .= "\n$lmix{$o{lmix}}";#modified by Rao 10/31
+		  }
+	 }
+
+	 #$idpblock .= "\npermitpragma:1\npragma:noqcache,nodegrade,$override".$lang_str.$bracket_str.$trace_str; #remove language by Rao on 10/31
+	 $idpblock .= "\npermitpragma:1\npragma:noqcache,nodegrade,$override";
+	 $idpblock .= "\necho:1\nechocmd:1" if $o{echo};
+	 $idpblock .= "\nvcano:1" if $o{vcano};
+	 $idpblock .= "\nyss_search:doBlend 1" if $o{blend};
+	 $idpblock .= "\nxorrospec:noxorro" if $o{xorro}==0;
+	 &add_params if (defined $o{add});
+	 #$idpblock .= "\nIntlAnnotatorOptions:bytelength,jpscript1" if $o{jpscript}; ##commented by Rao 10/31
+	 $idpblock .= "\nQueryAttributeDicts:query6\nTermAttributeDicts:term6\nDictAnnotator:true" if $o{usdict} == 1;
+	 $idpblock .= "\nQueryAttributeDicts:query7\nTermAttributeDicts:term7\nDictAnnotator:true" if $o{usdict} == 7;
+	 $idpblock .= "\nQueryAttributeDicts:ukquery1\nTermAttributeDicts:ukterm1\nDictAnnotator:true" if $o{ukdict} == 1;
+	 $idpblock .= "\nunique:doc,host 2" if $o{uniq} == 2; ##commented by Rao 10/
+
+	# turn off priority hash replacement - ciya 
+         $idpblock .= "\nPriorityHashReplacement:0";
+
+	 $idpblock .= "\n\n";
+
+	 die "Unique can't be 1 when you are going to production\n" if $o{uniq} == 1 and $o{local}==0;
+	 if($o{uniq} == 0 and $o{local}==0) { 
+		 print STDERR "Your are missing '-uniq 2' the general setting  when scraping from production\n\n\n"; 
+		 sleep(2);
+	 }
+}
+
+sub add_params {
+
+	 #print "$o{add}\n";
+	 my @lines = split /\\n/, $o{add};
+	 my %newidp = ();
+	 #print "oldblock:\n$idpblock\n";	 
+	 foreach my $line (@lines) {
+		  my @fields = split /:/, $line;
+		  $newidp{$fields[0]} = $fields[1];
+	 }
+
+	 my @idplines = split /\n/, $idpblock;
+	 chomp @idplines;
+
+	 my %idpargs = ();
+	 foreach my $i (0..$#idplines) {
+		  my ($arg, $value) = split /:/, $idplines[$i];
+		  if (defined $newidp{$arg}) {
+				$idplines[$i] .= ",$newidp{$arg}";
+				delete $newidp{$arg};
+		  }		  
+	 }
+	 foreach (keys %newidp) {
+		  push @idplines, "$_:$newidp{$_}";
+	 }
+	 $idpblock = join "\n", @idplines;
+	 #print "newblock:\n$idpblock\n";
+}
+
+sub runQry {
+	 
+	 my $qu          = shift;
+	 $qu             =~ s/\s*$//g;
+	 my @qufields    = split /\t/, $qu;
+	 my $qry         = $qufields[0];
+	 my $sadjust_str = "";
+	 my $unique_str  = "";
+	 my $url_str     = "";
+	 my ($idpcmd, $url);
+	 $unique_str     = "UNIQUE(ndochash d,domainip4hash 2,nhosthash 2,sketchhash,tahash)" if $o{uniq}==1;
+
+	 if($o{yqry}) {
+		 my $yqry = $qufields[1];
+         $yqry =~ s/UNIQUE\(.*?\)// if $o{uniq} == -1;
+		 $idpcmd = "idp\nclient:$o{client}\n\nsearch\n"."query:$yqry $sadjust_str $unique_str\n".$idpblock;
+	 }
+	 else {
+		 $url     = $qufields[1] if $#qufields>0;
+		 $url     = "http://".$url if $url  and $qufields[1] !~ /^http/;
+		 $url_str = "RESTRICT(originurl:$url)" if $url;
+		 $idpcmd  = "idp\nclient:$o{client}\n\nsearch\n"."query:ALLWORDS($qry) $url_str $sadjust_str $unique_str\n".$idpblock;
+	 }
+
+	 my $success = 0;
+	 my $socket;
+	 while ($success<$o{retry}) {
+		  $socket = IO::Socket::INET->new(
+				  PeerAddr => $o{host},
+				  PeerPort => $o{port},
+				  Proto    => "tcp",
+				  Type     => SOCK_STREAM
+				  );
+		  last if $socket;
+		  $success++;
+	 }
+	 if ($success>=$o{retry}) {
+		  die "Couldn't connect to $o{host}:$o{port}. Tried $o{retry} times\n";
+	 }
+	 
+	 print $socket $idpcmd;
+	 print "\nIDPBLOCK($o{host}:$o{port}):\n$idpcmd\n";
+	 print "QUERY_NUMBER:$qrynum\t$qu\n";
+	 my @response = <$socket>;
+	 close($socket);
+	 print "$_" foreach (@response);
+	 sleep($o{sleep});
+}
+
+sub loadrlmix {
+
+	 open(IN, $o{rlfile}) or die "Can't open rlmixes file $o{rlfile}\n";
+
+	 while(<IN>) {
+		  chomp;
+		  next if /^\s*$/;
+		  my @tmp = split /\s+/, $_;
+		  die "Line $_ not right in $o{rlfile}\n" if $#tmp !=2;
+		  if ($tmp[2] ne "NULL") {
+				$lmix{$tmp[0]} = $tmp[2];
+		  }
+		  else {
+				$lmix{$tmp[0]} = "";
+		  }
+		  if ($tmp[1] ne "NULL") {
+				$rmix{$tmp[0]} = $tmp[1];
+		  }
+		  else {
+				$rmix{$tmp[0]} = "";
+		  }
+	 }
+}

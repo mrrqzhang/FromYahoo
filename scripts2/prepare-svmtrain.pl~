@@ -1,0 +1,11 @@
+#>2008:0 =2007:1 <2007:2
+
+#dtime   (3)
+#lastmod (3)
+#dmin    (3)
+#dmax    (3)
+#dtime+lastmod
+#dtime+dmin
+#dmin+dmax
+#lastmod+dmax
+#dtime+dmin+dmax

@@ -1,0 +1,15 @@
+#!/usr/releng/bin/perl
+
+
+while(<>) {
+  chomp() ;
+  $year = "" ;
+  @fields = split /\t/ ;
+  $query = $fields[0] ;
+  while ( $query =~ /(200[0-9])/ ) {
+    $year = "$year $1" ;
+    $query =~ s/200[0-9]/ /i ;
+  }
+  print "$year\n" ;
+  print "$query\n" ;
+}
